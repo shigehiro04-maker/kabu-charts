@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>バルニバービ（3418）業績ダッシュボード</title>
+<link rel="stylesheet" href="assets/style.css">
+<!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--></head>
+<body><!--kb-btn--><button class="kb-theme kb-corner" id="kbTheme" type="button" data-kb="reload" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn-->
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow"><a href="../fundamentals.html" style="color:inherit">← 東証スクリーニング</a></div>
+    <h1>バルニバービ<span class="code">3418</span></h1>
+    <div class="slip" id="slip"></div>
+    <p class="biz">レストラン運営とその企画コンサルティングを主力に、結婚式やイベントの企画運営も手掛ける。</p><p class="site"><a href="https://www.balnibarbi.com" target="_blank" rel="noopener noreferrer"><b>公式サイト ↗</b><span>www.balnibarbi.com</span></a></p>
+  </header>
+
+  <section class="cards" id="cards" aria-label="判定サマリー"></section>
+
+  <section class="grid">
+    <div class="panel" id="p-annual"></div>
+    <div class="panel" id="p-cf"></div>
+    <div class="panel" id="p-q"></div>
+    <div class="panel" id="p-div"></div>
+    <div class="panel full" id="p-bs"></div>
+    <div class="panel full" id="p-holders"></div>
+  </section>
+
+  <details class="more">
+    <summary>通期の数値をすべて見る</summary>
+    <div class="inner" id="t-annual"></div>
+  </details>
+  <details class="more">
+    <summary>判定の基準と注記</summary>
+    <div class="inner foot"><ol>
+      <li>直近の通期決算を、同じ業種の中央値と比べて判定しています。▲＝良い側　●＝並み　▼＝注意。</li>
+      <li>成長性：売上高の年平均成長率が5%以上で増収。利益が初年度を下回ると増収減益。</li>
+      <li>収益性：営業利益率が業種中央値の1.2倍以上で高い、0.6倍未満で低い。</li>
+      <li>財務安全性：自己資本比率が50%以上か業種の1.3倍以上で厚い、20%未満で薄め（業種並みなら標準）。</li>
+      <li>資本効率：ROE 10%以上で高い、5%未満で低い。</li>
+      <li>割安度：PERとPBRがともに業種中央値を下回ると割安、ともに上回ると割高。</li>
+      <li>売上総利益・粗利率は売上原価データがある期のみ表示し、データの無い系列・列は出しません。</li>
+      <li>グラフ：通期・配当の右端の薄い棒は会社予想（J-Quants 決算短信サマリーの最新値）。折れ線は右軸（%）。</li>
+      <li>経常利益は J-Quants の決算短信サマリーから取得（日本基準のみ。取得範囲は直近約2年）。IFRS・米国基準は税引前利益で表示します。</li>
+      <li>貸借対照表は有価証券報告書（EDINET API）の連結貸借対照表（連結が無い会社は個別）を区分にまとめたもの。日本基準とIFRSの科目を対応させています。売上債権は受取手形・売掛金・電子記録債権・契約資産、買入債務は支払手形・買掛金・電子記録債務の合計。自己資本は純資産から非支配株主持分と新株予約権を除いた額です。</li>
+      <li>株主構成は最新の有価証券報告書「大株主の状況」（上位10名）と自己株式数から、発行済株式数に対する割合で描画（EDINET API）。その他は上位10名・自己株式以外の合計です。</li>
+      <li>四半期決算は累計値の差分から単独四半期を算出。フリーCFは営業CF＋投資CF。配当性向は一株配当÷EPS。</li>
+      <li>出所：~/株分析 の fundamentals/（通期）。株価・時価総額は取得日時点。生成 2026-10-09</li>
+    </ol></div>
+  </details>
+</div>
+<script src="assets/app.js"></script>
+<script>renderCompany({"code":"3418","name":"バルニバービ","market":"グロース","sector":"小売業","quote":{"price":1051.0,"priceDate":"2026-10-09","mcap":9484.098,"per":17.29,"pbr":2.82,"psr":0.7,"yld":0.0095,"asof":"2026-10-09"},"annual":[{"fy":"22/7期","fyEnd":"2022-07-31","y":2022,"rev":9969.72,"gp":6940.705,"op":-447.322,"pbt":249.458,"ni":123.784,"ta":8892.967,"se":2246.702,"eq":0.2526,"cr":1.238,"ocf":1207.379,"icf":-448.816,"fcf":-379.681,"freecf":763.109,"ibd":4167.894,"cash":2681.246,"ebitda":721.854,"eps":14.39,"bps":253.68,"dps":7.25,"opm":-0.04486806048715511,"nim":0.012415995634782122,"gpm":0.6961785285845541,"roe":0.05509586941214278,"roa":0.01391931399273156,"odp":null,"payout":0.5038220986796386,"frcf":758.5629999999999},{"fy":"23/7期","fyEnd":"2023-07-31","y":2023,"rev":13363.196,"gp":9596.009,"op":1161.103,"pbt":1022.253,"ni":673.459,"ta":8826.181,"se":2853.737,"eq":0.3233,"cr":1.8877000000000002,"ocf":548.674,"icf":-952.422,"fcf":-743.466,"freecf":-189.679,"ibd":3489.021,"cash":1585.482,"ebitda":1408.877,"eps":76.04,"bps":322.22,"dps":7.5,"opm":0.086888121673887,"nim":0.050396551842837596,"gpm":0.7180923635333942,"roe":0.23599196422094956,"roa":0.07630242343772464,"odp":null,"payout":0.09863229879011046,"frcf":-403.74800000000005},{"fy":"24/7期","fyEnd":"2024-07-31","y":2024,"rev":13452.987,"gp":9908.643,"op":647.933,"pbt":578.16,"ni":538.22,"ta":10171.735,"se":3303.392,"eq":0.3248,"cr":1.2533,"ocf":424.674,"icf":-784.089,"fcf":632.812,"freecf":-350.353,"ibd":4210.637,"cash":1851.757,"ebitda":1042.519,"eps":60.77,"bps":372.99,"dps":10.0,"opm":0.04816276117712743,"nim":0.04000747194656473,"gpm":0.7365385099978169,"roe":0.16292949792213582,"roa":0.05291329355316472,"odp":646.0,"payout":0.1645548790521639,"frcf":-359.4150000000001}],"peer":{"n":322,"opm":0.03687204973974771,"nim":0.023695449975106378,"eq":0.46990000000000004,"roe":0.07630331753554502,"gpm":0.45166151970527874,"per":16.23,"pbr":1.67,"yld":0.014599999999999998},"fc":{"fy":"25/7期予","fyEnd":"2025-07-31","fc":true,"disc":"2025-06-13","rev":14591.0,"op":901.0,"odp":883.0,"ni":611.0,"dps":10.0,"eps":78.74666666666667,"opm":0.06175039407854157,"payout":0.12698950220115138},"quarters":[{"fy":"25/1Q","fyEnd":"2025-07-31","perEnd":"2024-10-31","perSt":"2024-08-01","rev":3539.0,"op":125.0,"odp":122.0,"ni":79.0,"opm":0.03532071206555524},{"fy":"25/2Q","fyEnd":"2025-07-31","perEnd":"2025-01-31","perSt":null,"rev":3423.0,"op":115.0,"odp":105.0,"ni":45.0,"opm":0.03359626059012562},{"fy":"25/3Q","fyEnd":"2025-07-31","perEnd":"2025-04-30","perSt":null,"rev":3567.0,"op":189.0,"odp":176.0,"ni":158.0,"opm":0.05298570227081581},{"fy":"25/4Q","fyEnd":"2025-07-31","perEnd":"2025-07-31","perSt":null,"rev":3807.0,"op":209.0,"odp":218.0,"ni":146.0,"opm":0.05489887050170738},{"fy":"26/1Q","fyEnd":"2026-07-31","perEnd":"2025-10-31","perSt":"2025-08-01","rev":3763.0,"op":155.0,"odp":145.0,"ni":109.0,"opm":0.04119053946319426},{"fy":"26/2Q","fyEnd":"2026-07-31","perEnd":"2026-01-31","perSt":null,"rev":3635.0,"op":90.0,"odp":64.0,"ni":31.0,"opm":0.024759284731774415},{"fy":"26/3Q","fyEnd":"2026-07-31","perEnd":"2026-04-30","perSt":null,"rev":3687.0,"op":34.0,"odp":27.0,"ni":29.0,"opm":0.009221589368049905}],"odpName":"経常利益","holders":{"asof":"2025-07-31","filed":"2025-10-27","issued":10962380.0,"treasury":167400.0,"holders":[["株式会社HUMO",2886000.0,0.2673],["佐藤 裕久",796900.0,0.0738],["SBIホールディングス株式会社",600000.0,0.0556],["麒麟麦酒株式会社",188000.0,0.0174],["中島 邦子",174800.0,0.0162],["石田 敏和",120000.0,0.0111],["株式会社日本カストディ銀行(信託口)",96500.0,0.0089],["CITIBANK (SWITZERLAND)AG",75000.0,0.0069],["バルニバービ従業員持株会",64200.0,0.0059],["田中 亮平",63400.0,0.0059]]},"bs":[{"fy":"22/7","fyEnd":"2022-07-31","std":"JP","ta":8892.967,"tl":6525.384,"na":2367.582,"noCA":false,"cash":2681.246,"recv":483.936,"inv":1666.73,"oca":405.004,"ppe":1878.914,"onca":1777.137,"pay":272.804,"ocl":3957.505,"ncl":2295.075,"eq":2246.702,"oeq":120.88},{"fy":"23/7","fyEnd":"2023-07-31","std":"JP","ta":8826.181,"tl":5849.37,"na":2976.811,"noCA":false,"cash":1585.482,"recv":619.604,"inv":2201.858,"oca":438.165,"ppe":2202.103,"onca":1778.969,"pay":331.337,"ocl":2235.314,"ncl":3282.719,"eq":2853.738,"oeq":123.073},{"fy":"24/7","fyEnd":"2024-07-31","std":"JP","ta":10171.735,"tl":6742.968,"na":3428.767,"noCA":false,"cash":1851.757,"recv":684.099,"inv":1634.775,"oca":299.716,"ppe":3862.578,"onca":1838.81,"pay":335.901,"ocl":3230.859,"ncl":3176.208,"eq":3303.392,"oeq":125.375},{"fy":"25/7","fyEnd":"2025-07-31","std":"JP","ta":13536.851,"tl":7465.376,"na":6071.475,"noCA":false,"cash":3394.087,"recv":806.806,"inv":2463.239,"oca":400.987,"ppe":4871.594,"onca":1600.138,"pay":350.87,"ocl":2795.623,"ncl":4318.883,"eq":5943.31,"oeq":128.165}]});</script>
+<!--kb-theme-js--><script>(function(){var bs=document.querySelectorAll('button.kb-theme[data-kb]');
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){var b=this,d=document.documentElement,
+cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=cur==='dark'?'light':'dark';
+d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}
+var f=document.querySelectorAll('iframe');for(var j=0;j<f.length;j++){try{f[j].contentWindow.postMessage({chartTheme:n},'*')}catch(e){}}
+var k=b.getAttribute('data-kb');
+if(k==='reload')location.reload();
+else if(k==='msg')window.postMessage({chartTheme:n},'*');
+else if(k==='fn'&&typeof window.__kbRedraw==='function')window.__kbRedraw();});})();</script><!--/kb-theme-js--><!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>グッドコムアセット（3475）業績ダッシュボード</title>
+<link rel="stylesheet" href="assets/style.css">
+<!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--></head>
+<body><!--kb-btn--><button class="kb-theme kb-corner" id="kbTheme" type="button" data-kb="reload" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn-->
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow"><a href="../fundamentals.html" style="color:inherit">← 東証スクリーニング</a></div>
+    <h1>グッドコムアセット<span class="code">3475</span></h1>
+    <div class="slip" id="slip"></div>
+    <p class="biz">「GENOVIA」ブランドの投資用マンションを企画・分譲し、賃貸管理やIPOコンサルも手掛ける。</p><p class="site"><a href="https://www.goodcomasset.co.jp" target="_blank" rel="noopener noreferrer"><b>公式サイト ↗</b><span>www.goodcomasset.co.jp</span></a></p>
+  </header>
+
+  <section class="cards" id="cards" aria-label="判定サマリー"></section>
+
+  <section class="grid">
+    <div class="panel" id="p-annual"></div>
+    <div class="panel" id="p-cf"></div>
+    <div class="panel" id="p-q"></div>
+    <div class="panel" id="p-div"></div>
+    <div class="panel full" id="p-bs"></div>
+    <div class="panel full" id="p-holders"></div>
+  </section>
+
+  <details class="more">
+    <summary>通期の数値をすべて見る</summary>
+    <div class="inner" id="t-annual"></div>
+  </details>
+  <details class="more">
+    <summary>判定の基準と注記</summary>
+    <div class="inner foot"><ol>
+      <li>直近の通期決算を、同じ業種の中央値と比べて判定しています。▲＝良い側　●＝並み　▼＝注意。</li>
+      <li>成長性：売上高の年平均成長率が5%以上で増収。利益が初年度を下回ると増収減益。</li>
+      <li>収益性：営業利益率が業種中央値の1.2倍以上で高い、0.6倍未満で低い。</li>
+      <li>財務安全性：自己資本比率が50%以上か業種の1.3倍以上で厚い、20%未満で薄め（業種並みなら標準）。</li>
+      <li>資本効率：ROE 10%以上で高い、5%未満で低い。</li>
+      <li>割安度：PERとPBRがともに業種中央値を下回ると割安、ともに上回ると割高。</li>
+      <li>売上総利益・粗利率は売上原価データがある期のみ表示し、データの無い系列・列は出しません。</li>
+      <li>グラフ：通期・配当の右端の薄い棒は会社予想（J-Quants 決算短信サマリーの最新値）。折れ線は右軸（%）。</li>
+      <li>経常利益は J-Quants の決算短信サマリーから取得（日本基準のみ。取得範囲は直近約2年）。IFRS・米国基準は税引前利益で表示します。</li>
+      <li>貸借対照表は有価証券報告書（EDINET API）の連結貸借対照表（連結が無い会社は個別）を区分にまとめたもの。日本基準とIFRSの科目を対応させています。売上債権は受取手形・売掛金・電子記録債権・契約資産、買入債務は支払手形・買掛金・電子記録債務の合計。自己資本は純資産から非支配株主持分と新株予約権を除いた額です。</li>
+      <li>株主構成は最新の有価証券報告書「大株主の状況」（上位10名）と自己株式数から、発行済株式数に対する割合で描画（EDINET API）。その他は上位10名・自己株式以外の合計です。</li>
+      <li>四半期決算は累計値の差分から単独四半期を算出。フリーCFは営業CF＋投資CF。配当性向は一株配当÷EPS。</li>
+      <li>出所：~/株分析 の fundamentals/（通期）。株価・時価総額は取得日時点。生成 2026-10-09</li>
+    </ol></div>
+  </details>
+</div>
+<script src="assets/app.js"></script>
+<script>renderCompany({"code":"3475","name":"グッドコムアセット","market":"プライム","sector":"不動産業","quote":{"price":1465.0,"priceDate":"2026-10-09","mcap":44745.788,"per":27.49,"pbr":2.96,"psr":0.82,"yld":0.0281,"asof":"2026-10-09"},"annual":[{"fy":"22/10期","fyEnd":"2022-10-31","y":2022,"rev":40048.824,"gp":7605.564,"op":4612.043,"pbt":4247.606,"ni":2858.315,"ta":24452.256,"se":11471.948,"eq":0.4692,"cr":2.9377,"ocf":3482.922,"icf":-255.879,"fcf":455.81,"freecf":3478.56,"ibd":10067.825,"cash":11676.778,"ebitda":4552.958,"eps":99.58,"bps":399.13,"dps":21.45,"opm":0.11516051008139463,"nim":0.07137075985052645,"gpm":0.1899072991506567,"roe":0.24915689994410714,"roa":0.11689371320175937,"odp":null,"payout":0.2154046997389034,"frcf":3227.043},{"fy":"23/10期","fyEnd":"2023-10-31","y":2023,"rev":22190.489,"gp":5568.143,"op":2141.036,"pbt":1672.313,"ni":1030.138,"ta":53496.876,"se":11608.347,"eq":0.217,"cr":1.7341,"ocf":-33170.999,"icf":-53.66,"fcf":29446.035,"freecf":-33202.572,"ibd":40380.906,"cash":8060.98,"ebitda":2122.672,"eps":35.79,"bps":403.17,"dps":29.95,"opm":0.09648439923969228,"nim":0.04642250109945752,"gpm":0.2509247542945088,"roe":0.08874114462636239,"roa":0.019256040296633397,"odp":null,"payout":0.8368259290304554,"frcf":-33224.65900000001},{"fy":"24/10期","fyEnd":"2024-10-31","y":2024,"rev":59753.709,"gp":8893.524,"op":5451.569,"pbt":4924.012,"ni":3320.097,"ta":39460.042,"se":13937.058,"eq":0.3532,"cr":2.8689999999999998,"ocf":25861.747,"icf":-701.073,"fcf":-21560.328,"freecf":25844.243,"ibd":19828.375,"cash":11661.993,"ebitda":5613.595,"eps":115.26,"bps":483.72,"dps":34.98,"opm":0.09123398515730631,"nim":0.05556302789505502,"gpm":0.14883635089497121,"roe":0.23822079236521795,"roa":0.08413820238711353,"odp":4938.0,"payout":0.30348776678813116,"frcf":25160.674},{"fy":"25/10期","fyEnd":"2025-10-31","y":2025,"rev":54581.745,"gp":7878.881,"op":2935.408,"pbt":2633.883,"ni":1521.328,"ta":46289.236,"se":14202.445,"eq":0.3068,"cr":3.1305,"ocf":-1102.76,"icf":-2553.912,"fcf":1531.535,"freecf":-1147.919,"ibd":27798.063,"cash":9743.157,"ebitda":3143.703,"eps":53.3,"bps":495.62,"dps":41.22,"opm":0.05378003213345414,"nim":0.02787246908284079,"gpm":0.14435011192844788,"roe":0.10711733085394803,"roa":0.03286569689765457,"odp":2586.0,"payout":0.7733583489681051,"frcf":-3656.6719999999996}],"peer":{"n":130,"opm":0.09733208359389117,"nim":0.058811205471840766,"eq":0.32715,"roe":0.1201561658554399,"gpm":0.2329154069799074,"per":10.1,"pbr":1.165,"yld":0.0269},"fc":{"fy":"26/10期予","fyEnd":"2026-10-31","fc":true,"disc":"2026-06-12","rev":79281.0,"op":7729.0,"odp":6843.0,"ni":4540.0,"dps":42.135999999999996,"eps":145.13103999999998,"opm":0.09748867950706978,"payout":0.29033072456450393},"quarters":[{"fy":"24/4Q","fyEnd":"2024-10-31","perEnd":"2024-10-31","perSt":null,"rev":25765.0,"op":2587.0,"odp":2497.0,"ni":1702.0,"opm":0.10040752959441102},{"fy":"25/1Q","fyEnd":"2025-10-31","perEnd":"2025-01-31","perSt":"2024-11-01","rev":2579.0,"op":-49.0,"odp":-65.0,"ni":-84.0,"opm":-0.018999612252811167},{"fy":"25/2Q","fyEnd":"2025-10-31","perEnd":"2025-04-30","perSt":null,"rev":16648.0,"op":1695.0,"odp":1625.0,"ni":1131.0,"opm":0.10181403171552138},{"fy":"25/3Q","fyEnd":"2025-10-31","perEnd":"2025-07-31","perSt":null,"rev":5673.0,"op":-500.0,"odp":-590.0,"ni":-524.0,"opm":-0.08813678829543452},{"fy":"25/4Q","fyEnd":"2025-10-31","perEnd":"2025-10-31","perSt":null,"rev":29681.0,"op":1789.0,"odp":1616.0,"ni":998.0,"opm":0.06027424951989488},{"fy":"26/1Q","fyEnd":"2026-10-31","perEnd":"2026-01-31","perSt":"2025-11-01","rev":4693.0,"op":-235.0,"odp":-356.0,"ni":-356.0,"opm":-0.050074579160451736},{"fy":"26/2Q","fyEnd":"2026-10-31","perEnd":"2026-04-30","perSt":null,"rev":24697.0,"op":2808.0,"odp":2533.0,"ni":1767.0,"opm":0.11369802000242944}],"odpName":"経常利益","holders":{"asof":"2025-10-31","filed":"2026-01-28","issued":30543200.0,"treasury":1887500.0,"holders":[["長嶋 義和",4970096.0,0.1734],["株式会社long-island",4339200.0,0.1514],["長嶋 弘子",3392000.0,0.1184],["日本マスタートラスト信託銀行株式会社(信託口)",1649761.0,0.0576],["上遠野 俊一",599200.0,0.0209],["株式会社グリットパートナーズ",581959.0,0.0203],["株式会社日本カストディ銀行(信託口)",340600.0,0.0119],["川満 隆詞",242300.0,0.0085],["THE BANK OF NEW YORK MELLON 140044",177200.0,0.0062],["染谷 恭子",160000.0,0.0056]]},"bs":[{"fy":"22/10","fyEnd":"2022-10-31","std":"JP","ta":24452.256,"tl":12980.307,"na":11471.948,"noCA":false,"cash":11676.778,"recv":3.619,"inv":10492.534,"oca":1461.012,"ppe":71.115,"onca":747.198,"pay":null,"ocl":8045.178,"ncl":4935.129,"eq":11471.948,"oeq":0.0},{"fy":"23/10","fyEnd":"2023-10-31","std":"JP","ta":53496.876,"tl":41888.528,"na":11608.348,"noCA":false,"cash":8060.98,"recv":3.025,"inv":41574.327,"oca":3363.728,"ppe":69.769,"onca":425.047,"pay":null,"ocl":30564.48,"ncl":11324.048,"eq":11608.348,"oeq":0.0},{"fy":"24/10","fyEnd":"2024-10-31","std":"JP","ta":39460.042,"tl":25522.984,"na":13937.058,"noCA":false,"cash":11661.993,"recv":3.432,"inv":24098.479,"oca":2521.677,"ppe":70.156,"onca":1104.305,"pay":null,"ocl":13344.699,"ncl":12178.285,"eq":13937.058,"oeq":0.0},{"fy":"25/10","fyEnd":"2025-10-31","std":"JP","ta":46289.236,"tl":31742.957,"na":14546.278,"noCA":false,"cash":9543.157,"recv":59.221,"inv":29522.769,"oca":3454.807,"ppe":82.915,"onca":3626.367,"pay":null,"ocl":13601.461,"ncl":18141.496,"eq":14196.523,"oeq":349.755}]});</script>
+<!--kb-theme-js--><script>(function(){var bs=document.querySelectorAll('button.kb-theme[data-kb]');
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){var b=this,d=document.documentElement,
+cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=cur==='dark'?'light':'dark';
+d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}
+var f=document.querySelectorAll('iframe');for(var j=0;j<f.length;j++){try{f[j].contentWindow.postMessage({chartTheme:n},'*')}catch(e){}}
+var k=b.getAttribute('data-kb');
+if(k==='reload')location.reload();
+else if(k==='msg')window.postMessage({chartTheme:n},'*');
+else if(k==='fn'&&typeof window.__kbRedraw==='function')window.__kbRedraw();});})();</script><!--/kb-theme-js--><!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body>
+</html>

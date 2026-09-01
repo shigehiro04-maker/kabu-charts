@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>サムコ（6387）業績ダッシュボード</title>
+<link rel="stylesheet" href="assets/style.css">
+<!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--></head>
+<body><!--kb-btn--><button class="kb-theme kb-corner" id="kbTheme" type="button" data-kb="reload" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn-->
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow"><a href="../fundamentals.html" style="color:inherit">← 東証スクリーニング</a></div>
+    <h1>サムコ<span class="code">6387</span></h1>
+    <div class="slip" id="slip"></div>
+    <p class="biz">半導体や化合物材料向けの薄膜堆積・微細加工・洗浄装置を製造する半導体製造装置メーカー。</p><p class="site"><a href="https://www.samco.co.jp" target="_blank" rel="noopener noreferrer"><b>公式サイト ↗</b><span>www.samco.co.jp</span></a></p>
+  </header>
+
+  <section class="cards" id="cards" aria-label="判定サマリー"></section>
+
+  <section class="grid">
+    <div class="panel" id="p-annual"></div>
+    <div class="panel" id="p-cf"></div>
+    <div class="panel" id="p-q"></div>
+    <div class="panel" id="p-div"></div>
+    <div class="panel full" id="p-bs"></div>
+    <div class="panel full" id="p-holders"></div>
+  </section>
+
+  <details class="more">
+    <summary>通期の数値をすべて見る</summary>
+    <div class="inner" id="t-annual"></div>
+  </details>
+  <details class="more">
+    <summary>判定の基準と注記</summary>
+    <div class="inner foot"><ol>
+      <li>直近の通期決算を、同じ業種の中央値と比べて判定しています。▲＝良い側　●＝並み　▼＝注意。</li>
+      <li>成長性：売上高の年平均成長率が5%以上で増収。利益が初年度を下回ると増収減益。</li>
+      <li>収益性：営業利益率が業種中央値の1.2倍以上で高い、0.6倍未満で低い。</li>
+      <li>財務安全性：自己資本比率が50%以上か業種の1.3倍以上で厚い、20%未満で薄め（業種並みなら標準）。</li>
+      <li>資本効率：ROE 10%以上で高い、5%未満で低い。</li>
+      <li>割安度：PERとPBRがともに業種中央値を下回ると割安、ともに上回ると割高。</li>
+      <li>売上総利益・粗利率は売上原価データがある期のみ表示し、データの無い系列・列は出しません。</li>
+      <li>グラフ：通期・配当の右端の薄い棒は会社予想（J-Quants 決算短信サマリーの最新値）。折れ線は右軸（%）。</li>
+      <li>経常利益は J-Quants の決算短信サマリーから取得（日本基準のみ。取得範囲は直近約2年）。IFRS・米国基準は税引前利益で表示します。</li>
+      <li>貸借対照表は有価証券報告書（EDINET API）の連結貸借対照表（連結が無い会社は個別）を区分にまとめたもの。日本基準とIFRSの科目を対応させています。売上債権は受取手形・売掛金・電子記録債権・契約資産、買入債務は支払手形・買掛金・電子記録債務の合計。自己資本は純資産から非支配株主持分と新株予約権を除いた額です。</li>
+      <li>株主構成は最新の有価証券報告書「大株主の状況」（上位10名）と自己株式数から、発行済株式数に対する割合で描画（EDINET API）。その他は上位10名・自己株式以外の合計です。</li>
+      <li>四半期決算は累計値の差分から単独四半期を算出。フリーCFは営業CF＋投資CF。配当性向は一株配当÷EPS。</li>
+      <li>出所：~/株分析 の fundamentals/（通期）。株価・時価総額は取得日時点。生成 2026-10-09</li>
+    </ol></div>
+  </details>
+</div>
+<script src="assets/app.js"></script>
+<script>renderCompany({"code":"6387","name":"サムコ","market":"プライム","sector":"機械","quote":{"price":9730.0,"priceDate":"2026-10-09","mcap":78257.232,"per":53.1,"pbr":6.35,"psr":9.54,"yld":0.0046,"asof":"2026-10-09"},"annual":[{"fy":"22/7期","fyEnd":"2022-07-31","y":2022,"rev":6401.87,"gp":3189.847,"op":1371.206,"pbt":1481.405,"ni":1052.91,"ta":13379.64,"se":10057.531,"eq":0.7517,"cr":3.82,"ocf":1181.167,"icf":-214.042,"fcf":-64.106,"freecf":946.944,"ibd":886.173,"cash":5826.79,"ebitda":1560.795,"eps":131.07,"bps":1252.07,"dps":30.0,"opm":0.2141883543402162,"nim":0.16446913167558855,"gpm":0.49826800606697735,"roe":0.10468871535171008,"roa":0.07869494246481969,"odp":null,"payout":0.22888532845044635,"frcf":967.1249999999999},{"fy":"23/7期","fyEnd":"2023-07-31","y":2023,"rev":7830.591,"gp":3869.026,"op":1858.994,"pbt":1927.165,"ni":1366.127,"ta":14795.031,"se":11144.254,"eq":0.7532,"cr":3.8025,"ocf":-189.395,"icf":-75.93,"fcf":-325.194,"freecf":-208.247,"ibd":843.339,"cash":5301.752,"ebitda":1988.909,"eps":170.07,"bps":1387.4,"dps":35.0,"opm":0.23740149370590288,"nim":0.17446026743064474,"gpm":0.4940911867316272,"roe":0.1225857737987666,"roa":0.09233687986189416,"odp":null,"payout":0.20579761274769212,"frcf":-265.32500000000005},{"fy":"24/7期","fyEnd":"2024-07-31","y":2024,"rev":8203.159,"gp":4193.32,"op":2017.161,"pbt":2088.654,"ni":1471.991,"ta":16116.025,"se":12299.793,"eq":0.7631999999999999,"cr":3.9485,"ocf":1642.346,"icf":-292.17,"fcf":-103.438,"freecf":1386.571,"ibd":1111.261,"cash":6592.297,"ebitda":2176.744,"eps":183.25,"bps":1531.26,"dps":45.0,"opm":0.245900512229496,"nim":0.17944196863671666,"gpm":0.5111835574563409,"roe":0.11967607910149382,"roa":0.09133710080494414,"odp":2088.0,"payout":0.24556616643929058,"frcf":1350.176}],"peer":{"n":204,"opm":0.0875449846594597,"nim":0.06992791212968723,"eq":0.6615,"roe":0.07452200342343421,"gpm":0.2988989348222375,"per":15.76,"pbr":1.01,"yld":0.022799999999999997},"fc":{"fy":"25/7期予","fyEnd":"2025-07-31","fc":true,"disc":"2025-06-11","rev":9160.0,"op":2290.0,"odp":2280.0,"ni":1550.0,"dps":60.0,"eps":192.96,"opm":0.25,"payout":0.31094527363184077},"quarters":[{"fy":"25/1Q","fyEnd":"2025-07-31","perEnd":"2024-10-31","perSt":"2024-08-01","rev":1276.0,"op":116.0,"odp":128.0,"ni":89.0,"opm":0.09090909090909091},{"fy":"25/2Q","fyEnd":"2025-07-31","perEnd":"2025-01-31","perSt":null,"rev":2845.0,"op":874.0,"odp":883.0,"ni":625.0,"opm":0.30720562390158174},{"fy":"25/3Q","fyEnd":"2025-07-31","perEnd":"2025-04-30","perSt":null,"rev":2120.0,"op":403.0,"odp":359.0,"ni":254.0,"opm":0.19009433962264152},{"fy":"25/4Q","fyEnd":"2025-07-31","perEnd":"2025-07-31","perSt":null,"rev":3101.0,"op":949.0,"odp":1003.0,"ni":729.0,"opm":0.30603031280232185},{"fy":"26/1Q","fyEnd":"2026-07-31","perEnd":"2025-10-31","perSt":"2025-08-01","rev":1526.0,"op":151.0,"odp":177.0,"ni":124.0,"opm":0.09895150720838794},{"fy":"26/2Q","fyEnd":"2026-07-31","perEnd":"2026-01-31","perSt":null,"rev":3061.0,"op":877.0,"odp":896.0,"ni":627.0,"opm":0.2865076772296635},{"fy":"26/3Q","fyEnd":"2026-07-31","perEnd":"2026-04-30","perSt":null,"rev":2827.0,"op":835.0,"odp":892.0,"ni":625.0,"opm":0.29536611248673506}],"odpName":"経常利益","holders":{"asof":"2025-07-31","filed":"2025-10-20","issued":8042881.0,"treasury":10400.0,"holders":[["(一財)サムコ科学技術振興財団",1000000.0,0.1245],["日本マスタートラスト信託銀行(株)",920000.0,0.1146],["辻 理",863000.0,0.1076],["サムコエンジニアリング(株)",850000.0,0.1059],["(株)日本カストディ銀行",238000.0,0.0297],["辻 一美",201000.0,0.0251],["野村信託銀行(株)",153000.0,0.0191],["(株)三菱UFJ銀行",129000.0,0.0161],["立田 利明",103000.0,0.0128],["三菱UFJキャピタル(株)",102000.0,0.0128]]},"bs":[{"fy":"22/7","fyEnd":"2022-07-31","std":"JP","ta":13379.64,"tl":3322.108,"na":10057.532,"noCA":false,"cash":5826.79,"recv":1383.147,"inv":1585.206,"oca":45.305,"ppe":3815.865,"onca":723.327,"pay":779.591,"ocl":1534.649,"ncl":1007.868,"eq":10057.532,"oeq":0.0},{"fy":"23/7","fyEnd":"2023-07-31","std":"JP","ta":14795.031,"tl":3650.775,"na":11144.255,"noCA":false,"cash":5301.752,"recv":2684.652,"inv":2170.372,"oca":18.809,"ppe":3863.459,"onca":755.987,"pay":861.405,"ocl":1814.634,"ncl":974.736,"eq":11144.255,"oeq":0.0},{"fy":"24/7","fyEnd":"2024-07-31","std":"JP","ta":16116.025,"tl":3816.232,"na":12299.793,"noCA":false,"cash":6592.297,"recv":2123.623,"inv":2361.474,"oca":110.933,"ppe":4096.707,"onca":830.991,"pay":715.373,"ocl":2118.184,"ncl":982.675,"eq":12299.793,"oeq":0.0},{"fy":"25/7","fyEnd":"2025-07-31","std":"JP","ta":17774.224,"tl":4215.549,"na":13558.675,"noCA":false,"cash":6983.396,"recv":3070.487,"inv":2413.792,"oca":54.324,"ppe":4455.043,"onca":797.182,"pay":831.103,"ocl":2383.575,"ncl":1000.871,"eq":13558.675,"oeq":0.0}]});</script>
+<!--kb-theme-js--><script>(function(){var bs=document.querySelectorAll('button.kb-theme[data-kb]');
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){var b=this,d=document.documentElement,
+cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=cur==='dark'?'light':'dark';
+d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}
+var f=document.querySelectorAll('iframe');for(var j=0;j<f.length;j++){try{f[j].contentWindow.postMessage({chartTheme:n},'*')}catch(e){}}
+var k=b.getAttribute('data-kb');
+if(k==='reload')location.reload();
+else if(k==='msg')window.postMessage({chartTheme:n},'*');
+else if(k==='fn'&&typeof window.__kbRedraw==='function')window.__kbRedraw();});})();</script><!--/kb-theme-js--><!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body>
+</html>

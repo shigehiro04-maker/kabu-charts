@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>大盛工業（1844）業績ダッシュボード</title>
+<link rel="stylesheet" href="assets/style.css">
+<!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--></head>
+<body><!--kb-btn--><button class="kb-theme kb-corner" id="kbTheme" type="button" data-kb="reload" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn-->
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow"><a href="../fundamentals.html" style="color:inherit">← 東証スクリーニング</a></div>
+    <h1>大盛工業<span class="code">1844</span></h1>
+    <div class="slip" id="slip"></div>
+    <p class="biz">上下水道の土木工事を主力に、不動産の売買・賃貸や太陽光発電設備の販売も手掛ける建設会社。</p><p class="site"><a href="https://www.ohmori.co.jp" target="_blank" rel="noopener noreferrer"><b>公式サイト ↗</b><span>www.ohmori.co.jp</span></a></p>
+  </header>
+
+  <section class="cards" id="cards" aria-label="判定サマリー"></section>
+
+  <section class="grid">
+    <div class="panel" id="p-annual"></div>
+    <div class="panel" id="p-cf"></div>
+    <div class="panel" id="p-q"></div>
+    <div class="panel" id="p-div"></div>
+    <div class="panel full" id="p-bs"></div>
+    <div class="panel full" id="p-holders"></div>
+  </section>
+
+  <details class="more">
+    <summary>通期の数値をすべて見る</summary>
+    <div class="inner" id="t-annual"></div>
+  </details>
+  <details class="more">
+    <summary>判定の基準と注記</summary>
+    <div class="inner foot"><ol>
+      <li>直近の通期決算を、同じ業種の中央値と比べて判定しています。▲＝良い側　●＝並み　▼＝注意。</li>
+      <li>成長性：売上高の年平均成長率が5%以上で増収。利益が初年度を下回ると増収減益。</li>
+      <li>収益性：営業利益率が業種中央値の1.2倍以上で高い、0.6倍未満で低い。</li>
+      <li>財務安全性：自己資本比率が50%以上か業種の1.3倍以上で厚い、20%未満で薄め（業種並みなら標準）。</li>
+      <li>資本効率：ROE 10%以上で高い、5%未満で低い。</li>
+      <li>割安度：PERとPBRがともに業種中央値を下回ると割安、ともに上回ると割高。</li>
+      <li>売上総利益・粗利率は売上原価データがある期のみ表示し、データの無い系列・列は出しません。</li>
+      <li>グラフ：通期・配当の右端の薄い棒は会社予想（J-Quants 決算短信サマリーの最新値）。折れ線は右軸（%）。</li>
+      <li>経常利益は J-Quants の決算短信サマリーから取得（日本基準のみ。取得範囲は直近約2年）。IFRS・米国基準は税引前利益で表示します。</li>
+      <li>貸借対照表は有価証券報告書（EDINET API）の連結貸借対照表（連結が無い会社は個別）を区分にまとめたもの。日本基準とIFRSの科目を対応させています。売上債権は受取手形・売掛金・電子記録債権・契約資産、買入債務は支払手形・買掛金・電子記録債務の合計。自己資本は純資産から非支配株主持分と新株予約権を除いた額です。</li>
+      <li>株主構成は最新の有価証券報告書「大株主の状況」（上位10名）と自己株式数から、発行済株式数に対する割合で描画（EDINET API）。その他は上位10名・自己株式以外の合計です。</li>
+      <li>四半期決算は累計値の差分から単独四半期を算出。フリーCFは営業CF＋投資CF。配当性向は一株配当÷EPS。</li>
+      <li>出所：~/株分析 の fundamentals/（通期）。株価・時価総額は取得日時点。生成 2026-10-09</li>
+    </ol></div>
+  </details>
+</div>
+<script src="assets/app.js"></script>
+<script>renderCompany({"code":"1844","name":"大盛工業","market":"スタンダード","sector":"建設業","quote":{"price":417.0,"priceDate":"2026-10-09","mcap":7786.578,"per":18.79,"pbr":1.38,"psr":1.3,"yld":0.018000000000000002,"asof":"2026-10-09"},"annual":[{"fy":"22/7期","fyEnd":"2022-07-31","y":2022,"rev":5244.818,"gp":877.414,"op":314.181,"pbt":321.26,"ni":254.91,"ta":9538.312,"se":4481.718,"eq":0.46990000000000004,"cr":3.9139,"ocf":504.044,"icf":-4.476,"fcf":-203.95,"freecf":452.57,"ibd":3242.151,"cash":2659.264,"ebitda":443.869,"eps":17.07,"bps":299.66,"dps":6.96,"opm":0.05990312723911487,"nim":0.0486022584577768,"gpm":0.1672916009668972,"roe":0.05687774197305587,"roa":0.026724854460621544,"odp":null,"payout":0.4077328646748682,"frcf":499.568},{"fy":"23/7期","fyEnd":"2023-07-31","y":2023,"rev":6054.024,"gp":1013.86,"op":451.738,"pbt":417.34,"ni":293.239,"ta":11406.497,"se":5144.736,"eq":0.451,"cr":4.7371,"ocf":-1950.494,"icf":174.697,"fcf":1482.889,"freecf":-2092.481,"ibd":4355.539,"cash":2398.166,"ebitda":530.126,"eps":19.04,"bps":293.9,"dps":4.29,"opm":0.0746178079241179,"nim":0.04843703956244639,"gpm":0.1674687777914326,"roe":0.05699787122215794,"roa":0.025708067954605167,"odp":null,"payout":0.22531512605042017,"frcf":-1775.797},{"fy":"24/7期","fyEnd":"2024-07-31","y":2024,"rev":5981.731,"gp":1189.061,"op":621.863,"pbt":605.2,"ni":414.329,"ta":11931.283,"se":5617.804,"eq":0.4708,"cr":3.7039,"ocf":1475.606,"icf":-135.332,"fcf":-296.426,"freecf":1407.559,"ibd":4000.237,"cash":3447.516,"ebitda":702.301,"eps":22.19,"bps":301.15,"dps":7.5,"opm":0.10396037534954349,"nim":0.06926573595502707,"gpm":0.19878209167212635,"roe":0.07375284007772433,"roa":0.034726273779609455,"odp":595.0,"payout":0.337990085624155,"frcf":1340.274}],"peer":{"n":140,"opm":0.07197694486955547,"nim":0.05455157293493566,"eq":0.5460499999999999,"roe":0.09715563556926793,"gpm":0.1772600103045187,"per":11.275,"pbr":1.1,"yld":0.0296},"fc":{"fy":"25/7期予","fyEnd":"2025-07-31","fc":true,"disc":"2025-06-09","rev":6405.0,"op":759.0,"odp":727.0,"ni":516.0,"dps":7.5,"eps":20.775,"opm":0.11850117096018735,"payout":0.36101083032490977},"quarters":[{"fy":"25/1Q","fyEnd":"2025-07-31","perEnd":"2024-10-31","perSt":"2024-08-01","rev":1618.0,"op":193.0,"odp":187.0,"ni":122.0,"opm":0.11928306551297899},{"fy":"25/2Q","fyEnd":"2025-07-31","perEnd":"2025-01-31","perSt":null,"rev":1557.0,"op":312.0,"odp":305.0,"ni":210.0,"opm":0.2003853564547206},{"fy":"25/3Q","fyEnd":"2025-07-31","perEnd":"2025-04-30","perSt":null,"rev":1648.0,"op":210.0,"odp":204.0,"ni":126.0,"opm":0.12742718446601942},{"fy":"25/4Q","fyEnd":"2025-07-31","perEnd":"2025-07-31","perSt":null,"rev":1620.0,"op":70.0,"odp":63.0,"ni":60.0,"opm":0.043209876543209874},{"fy":"26/1Q","fyEnd":"2026-07-31","perEnd":"2025-10-31","perSt":"2025-08-01","rev":1737.0,"op":144.0,"odp":133.0,"ni":99.0,"opm":0.08290155440414508},{"fy":"26/2Q","fyEnd":"2026-07-31","perEnd":"2026-01-31","perSt":null,"rev":1866.0,"op":350.0,"odp":340.0,"ni":244.0,"opm":0.18756698821007503},{"fy":"26/3Q","fyEnd":"2026-07-31","perEnd":"2026-04-30","perSt":null,"rev":1953.0,"op":153.0,"odp":141.0,"ni":93.0,"opm":0.07834101382488479}],"odpName":"経常利益","holders":{"asof":"2025-07-31","filed":"2025-10-28","issued":18672849.0,"treasury":18600.0,"holders":[["WINBASE TECHNOLOGIES LIMITED",1041500.0,0.0558],["高野 廣克",626300.0,0.0336],["株式会社プラス",525702.0,0.0282],["石原 勝",421000.0,0.0226],["BNY GCM CLIENT ACCOUNT JPRDAC ISG(FE-AC)",298800.0,0.016],["有限会社広栄企画",228358.0,0.0122],["モルガン・スタンレーMUFG証券株式会社",211000.0,0.0113],["大盛工業役員持株会理事長 福井 龍一",197477.0,0.0106],["株式会社日本カストディ銀行(信託口)",179000.0,0.0096],["東京短資株式会社",174300.0,0.0093]]},"bs":[{"fy":"22/7","fyEnd":"2022-07-31","std":"JP","ta":9538.312,"tl":5056.592,"na":4481.719,"noCA":false,"cash":2659.264,"recv":1420.483,"inv":0.036,"oca":4081.73,"ppe":1031.143,"onca":345.656,"pay":null,"ocl":2085.263,"ncl":2971.329,"eq":4403.442,"oeq":78.277},{"fy":"23/7","fyEnd":"2023-07-31","std":"JP","ta":11406.497,"tl":6261.759,"na":5144.737,"noCA":false,"cash":2398.166,"recv":2561.082,"inv":0.03,"oca":5436.038,"ppe":714.182,"onca":296.999,"pay":null,"ocl":2194.426,"ncl":4067.333,"eq":5065.356,"oeq":79.381},{"fy":"24/7","fyEnd":"2024-07-31","std":"JP","ta":11931.283,"tl":6313.477,"na":5617.805,"noCA":false,"cash":3447.516,"recv":2283.028,"inv":0.025,"oca":5139.6,"ppe":703.079,"onca":358.035,"pay":null,"ocl":2934.808,"ncl":3378.669,"eq":5539.528,"oeq":78.277},{"fy":"25/7","fyEnd":"2025-07-31","std":"JP","ta":12037.244,"tl":6087.478,"na":5949.765,"noCA":false,"cash":2506.436,"recv":1895.32,"inv":17.842,"oca":6349.878,"ppe":813.528,"onca":454.24,"pay":null,"ocl":2012.765,"ncl":4074.713,"eq":5871.488,"oeq":78.277}]});</script>
+<!--kb-theme-js--><script>(function(){var bs=document.querySelectorAll('button.kb-theme[data-kb]');
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){var b=this,d=document.documentElement,
+cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=cur==='dark'?'light':'dark';
+d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}
+var f=document.querySelectorAll('iframe');for(var j=0;j<f.length;j++){try{f[j].contentWindow.postMessage({chartTheme:n},'*')}catch(e){}}
+var k=b.getAttribute('data-kb');
+if(k==='reload')location.reload();
+else if(k==='msg')window.postMessage({chartTheme:n},'*');
+else if(k==='fn'&&typeof window.__kbRedraw==='function')window.__kbRedraw();});})();</script><!--/kb-theme-js--><!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body>
+</html>

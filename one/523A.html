@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>セイワホールディングス（523A） | 株式分析ダッシュボード</title>
+<script>(function(){let t;try{t=localStorage.getItem('fdb-theme')}catch(e){}if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="assets/one.css">
+<!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--></head>
+<body><!--kb-btn--><button class="tbtn kb-theme kb-corner" id="theme" type="button" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn-->
+<div class="wrap">
+<header>
+  <h1 id="h-name"></h1><span class="cd" id="h-code"></span>
+  <span class="px" id="h-px"></span><span class="chg" id="h-chg"></span>
+  <span class="meta" id="h-meta"></span>
+  <span class="sp"><button class="tbtn" id="watchbtn" hidden>☆ 監視に追加</button><a class="tbtn" href="../index.html" style="text-decoration:none">トップ</a><a class="tbtn" href="index.html" style="text-decoration:none">銘柄一覧</a></span>
+</header>
+<div class="valline" id="valline" hidden></div>
+<p class="biz" id="biz"></p>
+<p class="bizlink" id="bizlink" hidden></p>
+
+<section class="card" id="sigcard">
+  <div class="hero">
+    <div>
+      <div class="big" id="big"></div>
+      <div class="n1" id="notes"></div>
+      <div class="plan" id="plan"></div>
+      <div class="wbox" id="wbox" hidden></div>
+    </div>
+    <div class="quad" id="quad"></div>
+  </div>
+  <div class="sigfoot"><button class="tgl" id="sig-tgl" aria-expanded="false"><span class="tri">▾</span> 内訳・推移を見る</button></div>
+  <div class="sigdet" id="sigdet" hidden>
+    <div><h5>テクニカルの内訳</h5><div id="partsT"></div></div>
+    <div><h5>ファンダメンタルの内訳</h5><div id="partsF"></div></div>
+    <div><h5>テクニカルスコアの推移</h5><div class="spk" id="spk"></div></div>
+  </div>
+</section>
+
+<div class="grid">
+  <div class="lcol">
+  <section class="card" id="chartcard">
+    <div class="bar">
+      <h2 style="margin:0">チャート</h2>
+      <div class="seg" id="rng"><button data-n="63">3ヶ月</button><button data-n="126" class="on">6ヶ月</button><button data-n="250">1年</button><button data-n="750">3年</button></div>
+      <div class="lg" id="lg-ichi"><span><i style="background:var(--tenkan)"></i>転換線</span><span><i style="background:var(--kijun)"></i>基準線</span><span><i style="background:var(--chikou)"></i>遅行</span><span><i class="sq" style="background:var(--cloudU)"></i>陽雲</span><span><i class="sq" style="background:var(--cloudD)"></i>陰雲</span></div>
+      <div class="lg" id="lg-vp"></div>
+      <button class="tgl" id="ch-tgl" aria-expanded="false" style="margin-left:auto"><span class="tri">▾</span> 詳細</button>
+    </div>
+    <div id="ch-det" hidden>
+      <div class="lg" style="margin-bottom:2px">
+        <label><input type="checkbox" id="cb-ichi" checked>一目均衡表</label>
+        <label><input type="checkbox" id="cb-ma"><i style="background:var(--ma25)"></i>25日<i style="background:var(--ma75);margin-left:4px"></i>75日</label>
+        <label><input type="checkbox" id="cb-200">200日</label>
+        <label><input type="checkbox" id="cb-vp" checked>価格帯別出来高</label>
+        <label><input type="checkbox" id="cb-bb">ボリンジャー</label>
+        <label><input type="checkbox" id="cb-mk" checked>売買サイン</label>
+        <label><input type="checkbox" id="cb-lv" checked>IN・利確・損切り</label>
+        <label><input type="checkbox" id="cb-osc" checked>RSI・MACD</label>
+      </div>
+      <div class="lvbar" id="lvbar"></div>
+    </div>
+    <div id="chart"></div>
+  </section>
+  <section class="card" id="bscard"><div class="bsgrid"><div class="fp" id="fp-bs"></div><div class="fp" id="fp-holders"></div></div></section>
+  </div>
+
+  <div class="rcol">
+  <section class="card" id="jkcard">
+    <h2><span style="white-space:nowrap">需給</span> <span class="hint" id="jk-hint"></span><a class="jklink" id="jk-link" href="#">需給分析で詳しく ›</a></h2>
+    <div class="jkg" id="jkg"></div>
+    <div class="jkf" id="jkf"></div>
+  </section>
+  <section class="card" id="fundcard">
+    <h2>ファンダメンタル <span class="hint" id="f-hint"></span></h2>
+    <div class="jcards" id="jcards"></div>
+    <div class="fgrid" id="fgrid"><div class="fp" id="fp-annual"></div><div class="fp" id="fp-cf"></div><div class="fp" id="fp-q"></div><div class="fp" id="fp-div"></div></div>
+    <div class="meta" id="fmeta"></div>
+  </section>
+  </div>
+</div>
+<footer><span></span><span id="gen"></span></footer>
+</div>
+<div id="tip"></div>
+<script src="assets/watch.js"></script>
+<script>const DATA={"info":{"code":"523A","name":"セイワホールディングス","market":"グロース","sector":"金属製品","date":"2026-10-09","price":1861.0,"chg":67.0,"chgp":3.7346711259754737,"biz":"道路標識や検査レーン、鋼製ブラケットを製造するほか、亜鉛メッキ加工や鋼構造物の設計施工も手掛ける。","url":"https://seiwaholdings.co.jp","fdate":"2026-05-31"},"px":{"show":750,"d":["2026-07-17","2026-07-21","2026-07-22","2026-07-23","2026-07-24","2026-07-27","2026-07-28","2026-07-29","2026-07-30","2026-07-31","2026-08-03","2026-08-04","2026-08-05","2026-08-06","2026-08-07","2026-08-10","2026-08-12","2026-08-13","2026-08-14","2026-08-17","2026-09-01","2026-09-02","2026-09-03","2026-09-04","2026-09-07","2026-09-08","2026-09-09","2026-09-10","2026-09-11","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-24","2026-09-25","2026-09-28","2026-09-29","2026-09-30","2026-10-01","2026-10-02","2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09"],"o":[1580,1500,1556,1503,1535,1558,1545,1459,1350,1380,1402,1481,1655,1670,1739,1661,1677,1760,1770,1755,1846,1801,1737,1671,1746,1781,1762,1785,1769,1725,1769,1774,1807,1822,1930,1816,1855,1858,1883,1980,1965,1971,1950,1920,1898,1794],"h":[1581,1550,1580,1555,1550,1588,1545,1460,1350,1449,1445,1697,1675,1762,1753,1717,1763,1815,1770,1834,1862,1844,1737,1758,1834,1862,1842,1849,1794,1760,1809,1798,1857,1917,1997,1900,1908,1915,1994,2010,2027,1992,1959,1947,1898,1867],"l":[1357,1445,1479,1500,1512,1536,1426,1311,1315,1336,1374,1481,1602,1639,1611,1591,1673,1749,1685,1680,1760,1700,1665,1659,1724,1762,1760,1761,1743,1686,1730,1739,1795,1822,1788,1800,1843,1845,1877,1947,1930,1927,1898,1859,1791,1757],"c":[1476,1526,1480,1511,1545,1551,1429,1344,1334,1419,1427,1675,1630,1755,1673,1717,1760,1780,1757,1834,1852,1704,1666,1724,1808,1771,1812,1849,1754,1754,1785,1776,1818,1906,1816,1824,1898,1900,1980,1963,1968,1973,1905,1898,1794,1861],"v":[314700,135700,87800,74100,76500,60700,143400,180800,70400,70600,74900,258300,118100,119000,137200,83600,63900,110800,77400,129100,159500,260600,76700,84700,106300,136100,71900,66900,97200,67800,50600,61000,71700,160800,203500,116000,94400,74000,96700,85500,110900,45100,58300,56800,70400,60000]},"fy":[{"fy":"2024-05","sales":7276000000.0,"op":471000000.0,"ni":281000000.0,"opm":6.47,"ocf":838000000.0,"fcf":589000000.0,"eqr":-2.2,"roe":-161.49425287356323,"per":null},{"fy":"2025-05","sales":7769000000.0,"op":700000000.0,"ni":327000000.0,"opm":9.01,"ocf":1358000000.0,"fcf":593000000.0,"eqr":7.47,"roe":38.836104513064136,"per":null},{"fy":"2026-05","sales":8011000000.0,"op":1502000000.0,"ni":1080000000.0,"opm":18.75,"ocf":1159000000.0,"fcf":1040000000.0,"eqr":42.57,"roe":17.235876157037982,"per":null}],"extra":{"mcap":355.575687,"ev_ebitda":18.112830781089414,"fscore":7.0,"payout":0.0,"beta":null,"cagr":4.93,"dy":0.0,"roe":17.235876157037982,"opm":18.75,"eqr":42.57,"per":32.93,"pbr":5.67,"sec_per":12.05,"sec_pbr":0.64,"sec_roe":6.028036755119688,"sec_opm":5.369999999999999,"sec_eqr":60.305,"rank":"61.0","nsec":"85"},"kb":{"annual":[{"fy":"24/5期","fyEnd":"2024-05-31","fc":null,"disc":null,"rev":7276.0,"op":471.0,"odp":445.0,"ni":281.0,"opm":0.06473336998350743,"ocf":838.0,"icf":-200.0,"fcf":-163.0,"cash":1334.0,"frcf":638.0,"dps":0.0,"payout":0.0,"eps":14.94},{"fy":"25/5期","fyEnd":"2025-05-31","fc":null,"disc":null,"rev":7769.0,"op":700.0,"odp":563.0,"ni":327.0,"opm":0.09010168618869867,"ocf":1358.0,"icf":-2375.0,"fcf":2607.0,"cash":2967.0,"frcf":-1017.0,"dps":0.0,"payout":0.0,"eps":17.39},{"fy":"26/5期","fyEnd":"2026-05-31","fc":null,"disc":null,"rev":8011.0,"op":1502.0,"odp":1364.0,"ni":1080.0,"opm":0.18749219822743726,"ocf":1159.0,"icf":-402.0,"fcf":2510.0,"cash":6258.0,"frcf":757.0,"dps":0.0,"payout":0.0,"eps":56.52}],"fc":{"fy":"27/5期予","fyEnd":"2027-05-31","fc":true,"disc":"2026-07-15","rev":9800.0,"op":null,"odp":null,"ni":null,"dps":0.0,"eps":null,"opm":null,"payout":null},"quarters":[{"fy":"26/4Q","fyEnd":"2026-05-31","perEnd":"2026-05-31","perSt":null,"rev":2014.0,"op":187.0,"odp":null,"ni":204.0,"opm":0.09285004965243297}],"odpName":"税引前利益","holders":{"asof":"2026-05-31","filed":"2026-08-25","issued":19106700.0,"treasury":null,"holders":[["野見山 勇大",10435500.0,0.5461],["石田 克史",1365800.0,0.0714],["株式会社日本カストディ銀行(信託口)",1129900.0,0.0591],["野村信託銀行株式会社(投信口)",758000.0,0.0396],["DBC1号投資事業有限責任組合",479500.0,0.025],["MSIP CLIENT SECURITIES",460400.0,0.024],["モルガン・スタンレーMUFG証券株式会社",364600.0,0.019],["NOMURA PB NOMINEES LIMITED OMNIBUS-MARGIN(CASHPB)",281960.0,0.0147],["楽天証券株式会社共有口",167000.0,0.0087],["BNP PARIBAS FINANCIAL MARKETS",150000.0,0.0078]]},"bs":[{"fy":"25/5","fyEnd":"2025-05-31","std":"IFRS","ta":11274.0,"tl":10431.0,"na":842.0,"noCA":false,"cash":2903.0,"recv":1452.0,"inv":509.0,"oca":142.0,"ppe":2432.0,"onca":3836.0,"pay":716.0,"ocl":2411.0,"ncl":7304.0,"eq":842.0,"oeq":0.0},{"fy":"26/5","fyEnd":"2026-05-31","std":"IFRS","ta":14719.0,"tl":8453.0,"na":6266.0,"noCA":false,"cash":6170.0,"recv":1299.0,"inv":504.0,"oca":234.0,"ppe":2878.0,"onca":3634.0,"pay":778.0,"ocl":2823.0,"ncl":4852.0,"eq":6266.0,"oeq":0.0}]},"srow":{"c":"523A","n":"セイワホールディングス","m":"グロース","s":"金属製品","d":"2026-10-09","p":1861,"chg":3.73,"ts":-40,"tt":null,"to":-11,"lv":null,"tc":[null,-0.67,null,-0.23,0,0.47],"tr":[1.3,null,null,1,-0.81,0,null,1,54.6,50,62,0.61],"te":["MACD売り転換（2日前）"],"hp0":1334,"hpk":0.646647,"hp":[220,297,226,274,326,336,147,15,0,131,144,527,458,651,524,592,659,690,654,773,801,572,513,603,733,676,739,796,650,650,697,684,748,885,745,758,872,875,999,973,980,988,883,872,711,815],"hs":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-33,-70,-58,-56,-54,-54,-49,-32,-47,-16,-40],"fs":16,"fc":[-0.5,0.75,0.16,0,0.56,0.49],"fr":[32.9,5.67,2,"実績PER",17.2,4,18.8,3.1,4.9,3,42.6,3,7,2.9,0,0],"ff":[],"fp":"2026-05-31","dv":44.8,"mc":356},"smeta":{"tw":{"ma":0.2,"macd":0.2,"ichi":0.2,"rsi":0.15,"bb":0.15,"vol":0.1},"fw":{"val":0.25,"prof":0.2,"grow":0.2,"safe":0.15,"fs":0.1,"cash":0.1},"levels":{"t":[50,20,-20,-50],"f":[55,20,-20,-55],"tr":[50,20,-20,-50],"os":[70,35,-35,-70],"ad":[60,40,-40,-60]},"names":["強い買い","買い","中立","売り","強い売り"]},"jk":{"score":59.0,"ratio":3.4922575387123063,"buy":428500.0,"sell":122700.0,"dbuy":2200.0,"dsell":-100.0,"days":4.493686815722136,"pl":-2.3885646936745664,"lend":0.5772765246449457,"short":1.1900000000000002,"judge":"中立","memo":"逆日歩+6・日証金で貸株超過+3","asof":"2026-10-08","flag":"","kind":"貸借"},"val":{"f":1076.5,"mean":1204.2,"mode":1861.1,"sd":560.7,"cv":46.6,"va":1104.2,"lo":576.3,"f0":1076.5,"hi":1861.2,"nm":6,"px":1861,"per":1861,"pbr":1861.2,"dcf":1296.5,"ddm":null,"h":856.6,"rim":576.3,"tk":773.9,"adj":false,"adju":false,"rel":"高","note":"","asof":"2026-10-09"},"gen":"2026-10-09 22:05"};</script>
+<script src="assets/one.js"></script>
+<!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body>
+</html>
