@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ビーエイブル（604A） | 株式分析ダッシュボード</title>
+<script>(function(){let t;try{t=localStorage.getItem('fdb-theme')}catch(e){}if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="assets/one.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1 id="h-name"></h1><span class="cd" id="h-code"></span>
+  <span class="px" id="h-px"></span><span class="chg" id="h-chg"></span>
+  <span class="meta" id="h-meta"></span>
+  <span class="sp"><button class="tbtn" id="watchbtn" hidden>☆ 監視に追加</button><a class="tbtn" href="../index.html" style="text-decoration:none">トップ</a><a class="tbtn" href="index.html" style="text-decoration:none">銘柄一覧</a><button class="tbtn" id="theme">明暗</button></span>
+</header>
+<p class="biz" id="biz"></p>
+
+<section class="card" id="sigcard">
+  <div class="hero">
+    <div>
+      <div class="big" id="big"></div>
+      <div class="n1" id="notes"></div>
+      <div class="plan" id="plan"></div>
+      <div class="wbox" id="wbox" hidden></div>
+    </div>
+    <div class="quad" id="quad"></div>
+  </div>
+  <div class="sigfoot"><button class="tgl" id="sig-tgl" aria-expanded="false"><span class="tri">▾</span> 内訳・推移を見る</button></div>
+  <div class="sigdet" id="sigdet" hidden>
+    <div><h5>テクニカルの内訳</h5><div id="partsT"></div></div>
+    <div><h5>ファンダメンタルの内訳</h5><div id="partsF"></div></div>
+    <div><h5>テクニカルスコアの推移</h5><div class="spk" id="spk"></div></div>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="card" id="chartcard">
+    <div class="bar">
+      <h2 style="margin:0">チャート</h2>
+      <div class="seg" id="rng"><button data-n="63">3ヶ月</button><button data-n="126" class="on">6ヶ月</button><button data-n="250">1年</button><button data-n="750">3年</button></div>
+      <div class="lg" id="lg-ichi"><span><i style="background:var(--tenkan)"></i>転換線</span><span><i style="background:var(--kijun)"></i>基準線</span><span><i style="background:var(--chikou)"></i>遅行</span><span><i class="sq" style="background:var(--cloudU)"></i>陽雲</span><span><i class="sq" style="background:var(--cloudD)"></i>陰雲</span></div>
+      <button class="tgl" id="ch-tgl" aria-expanded="false" style="margin-left:auto"><span class="tri">▾</span> 詳細</button>
+    </div>
+    <div id="ch-det" hidden>
+      <div class="lg" style="margin-bottom:2px">
+        <label><input type="checkbox" id="cb-ichi" checked>一目均衡表</label>
+        <label><input type="checkbox" id="cb-ma"><i style="background:var(--ma25)"></i>25日<i style="background:var(--ma75);margin-left:4px"></i>75日</label>
+        <label><input type="checkbox" id="cb-200">200日</label>
+        <label><input type="checkbox" id="cb-bb">ボリンジャー</label>
+        <label><input type="checkbox" id="cb-mk" checked>売買サイン</label>
+        <label><input type="checkbox" id="cb-lv" checked>IN・利確・損切り</label>
+        <label><input type="checkbox" id="cb-osc" checked>RSI・MACD</label>
+      </div>
+      <div class="lvbar" id="lvbar"></div>
+    </div>
+    <div id="chart"></div>
+  </section>
+
+  <section class="card" id="fundcard">
+    <h2>ファンダメンタル <span class="hint" id="f-hint"></span></h2>
+    <div class="jcards" id="jcards"></div>
+    <div class="fgrid" id="fgrid"><div class="fp" id="fp-rev"></div><div class="fp" id="fp-prof"></div><div class="fp" id="fp-mgn"></div><div class="fp" id="fp-cf"></div></div>
+    <div class="meta" id="fmeta"></div>
+  </section>
+</div>
+<footer><span></span><span id="gen"></span></footer>
+</div>
+<div id="tip"></div>
+<script src="assets/watch.js"></script>
+<script>const DATA={"info":{"code":"604A","name":"ビーエイブル","market":"スタンダード","sector":"建設業","date":"2026-09-25","price":1502.0,"chg":42.0,"chgp":2.8767123287671232,"biz":"原子力発電所の保守・点検工事を主力に、再生可能エネルギー事業や電力小売事業も手掛ける企業。","fdate":"2025-07-31"},"px":{"show":750,"d":["2026-07-29","2026-07-30","2026-07-31","2026-08-03","2026-08-04","2026-08-05","2026-08-06","2026-08-07","2026-08-10","2026-08-12","2026-08-13","2026-08-14","2026-08-17","2026-08-18","2026-08-19","2026-08-20","2026-08-21","2026-08-24","2026-08-25","2026-08-26","2026-08-27","2026-08-28","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04","2026-09-07","2026-09-08","2026-09-09","2026-09-10","2026-09-11","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-24","2026-09-25"],"o":[1000.6,1212,1123,969,963,923,920,891,910,948,1020,975,1022,994,982,954,1010,1048,1150,1111,1090,1111,1111,1105,1110,1070,1244,1357,1187,1224,1189,1172,1205,1504,1640,1600,1473,1410,1440],"h":[1296,1314,1170,1040,973,939,945,909,949,1027,1020,1054,1042,1039,1035,1039,1030,1110,1152,1220,1106,1160,1157,1150,1117,1244,1435,1357,1245,1264,1260,1218,1454,1565,1712,1600,1499,1538,1590],"l":[930.6,1043,930,950,881,900,872,881,891,941,956,966,968,968,936,951,998,1045,1081,1085,1037,1076,1070,1064,1048,1070,1175,1161,1127,1176,1153,1159,1201,1504,1455,1425,1388,1393,1428],"c":[1296,1063,954,993,908,921,891,907,933,1016,962,999,994,982,939,1039,1018,1081,1133,1130,1106,1081,1120,1140,1067,1203,1308,1187,1194,1219,1221,1175,1265,1565,1580,1493,1410,1460,1502],"v":[11864600,4585000,2743800,1856200,1205400,493000,593300,340900,310400,531100,309900,423100,393700,263800,419200,338800,130100,438900,431000,535400,351300,374500,500000,314800,247600,934700,3207200,1076100,547000,404400,444900,417500,3749100,491200,12173900,4150400,1286200,1244900,1219100]},"fy":[{"fy":"2024-07","sales":8680036000.0,"op":750543000.0,"ni":526092000.0,"opm":8.65,"ocf":1834962000.0,"fcf":1547228000.0,"eqr":51.67,"roe":11.391005623920911,"per":null},{"fy":"2025-07","sales":8984170000.0,"op":671305000.0,"ni":475639000.0,"opm":7.47,"ocf":-305797000.0,"fcf":-428998000.0,"eqr":53.2,"roe":9.333749353647685,"per":null}],"extra":{"mcap":148.3225,"ev_ebitda":17.138067967483497,"fscore":null,"payout":0.0,"beta":null,"cagr":3.51,"dy":0.0,"roe":9.333749353647685,"opm":7.47,"eqr":53.2,"per":31.18,"pbr":2.91,"sec_per":12.08,"sec_pbr":1.16,"sec_roe":9.812694278440404,"sec_opm":7.44,"sec_eqr":54.97,"rank":"124.0","nsec":"141"},"srow":{"c":"604A","n":"ビーエイブル","m":"スタンダード","s":"建設業","d":"2026-09-25","p":1502,"chg":2.88,"ts":-5,"tt":null,"to":-41,"lv":null,"tc":[null,0.05,null,-0.12,-0.7,1],"tr":[22.6,null,null,1,1.85,0,null,1,52.4,85,75,2.83],"te":[],"hp0":891,"hpk":0.68969,"hp":[587,249,91,148,25,43,0,23,61,181,103,157,149,132,70,215,184,275,351,347,312,275,332,361,255,452,605,429,439,476,478,412,542,977,999,873,753,825,886],"hs":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,38,32,4,-5],"fs":-8,"fc":[-0.5,0.33,0.17,0,null,-0.48],"fr":[31.2,2.91,2,"実績PER",9.3,4,7.5,3.5,3.5,3,53.2,3,null,-2.9,0,0],"ff":["決算が古い"],"fp":"2025-07-31","dv":38.9,"mc":148},"smeta":{"tw":{"ma":0.2,"macd":0.2,"ichi":0.2,"rsi":0.15,"bb":0.15,"vol":0.1},"fw":{"val":0.25,"prof":0.2,"grow":0.2,"safe":0.15,"fs":0.1,"cash":0.1},"levels":{"t":[50,20,-20,-50],"f":[55,20,-20,-55],"tr":[50,20,-20,-50],"os":[70,35,-35,-70],"ad":[60,40,-40,-60]},"names":["強い買い","買い","中立","売り","強い売り"]},"gen":"2026-09-25 16:44"};</script>
+<script src="assets/one.js"></script>
+</body>
+</html>

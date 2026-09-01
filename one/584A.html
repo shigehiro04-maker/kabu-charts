@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ＬｉＮＫＸ（584A） | 株式分析ダッシュボード</title>
+<script>(function(){let t;try{t=localStorage.getItem('fdb-theme')}catch(e){}if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="assets/one.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1 id="h-name"></h1><span class="cd" id="h-code"></span>
+  <span class="px" id="h-px"></span><span class="chg" id="h-chg"></span>
+  <span class="meta" id="h-meta"></span>
+  <span class="sp"><button class="tbtn" id="watchbtn" hidden>☆ 監視に追加</button><a class="tbtn" href="../index.html" style="text-decoration:none">トップ</a><a class="tbtn" href="index.html" style="text-decoration:none">銘柄一覧</a><button class="tbtn" id="theme">明暗</button></span>
+</header>
+<p class="biz" id="biz"></p>
+
+<section class="card" id="sigcard">
+  <div class="hero">
+    <div>
+      <div class="big" id="big"></div>
+      <div class="n1" id="notes"></div>
+      <div class="plan" id="plan"></div>
+      <div class="wbox" id="wbox" hidden></div>
+    </div>
+    <div class="quad" id="quad"></div>
+  </div>
+  <div class="sigfoot"><button class="tgl" id="sig-tgl" aria-expanded="false"><span class="tri">▾</span> 内訳・推移を見る</button></div>
+  <div class="sigdet" id="sigdet" hidden>
+    <div><h5>テクニカルの内訳</h5><div id="partsT"></div></div>
+    <div><h5>ファンダメンタルの内訳</h5><div id="partsF"></div></div>
+    <div><h5>テクニカルスコアの推移</h5><div class="spk" id="spk"></div></div>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="card" id="chartcard">
+    <div class="bar">
+      <h2 style="margin:0">チャート</h2>
+      <div class="seg" id="rng"><button data-n="63">3ヶ月</button><button data-n="126" class="on">6ヶ月</button><button data-n="250">1年</button><button data-n="750">3年</button></div>
+      <div class="lg" id="lg-ichi"><span><i style="background:var(--tenkan)"></i>転換線</span><span><i style="background:var(--kijun)"></i>基準線</span><span><i style="background:var(--chikou)"></i>遅行</span><span><i class="sq" style="background:var(--cloudU)"></i>陽雲</span><span><i class="sq" style="background:var(--cloudD)"></i>陰雲</span></div>
+      <button class="tgl" id="ch-tgl" aria-expanded="false" style="margin-left:auto"><span class="tri">▾</span> 詳細</button>
+    </div>
+    <div id="ch-det" hidden>
+      <div class="lg" style="margin-bottom:2px">
+        <label><input type="checkbox" id="cb-ichi" checked>一目均衡表</label>
+        <label><input type="checkbox" id="cb-ma"><i style="background:var(--ma25)"></i>25日<i style="background:var(--ma75);margin-left:4px"></i>75日</label>
+        <label><input type="checkbox" id="cb-200">200日</label>
+        <label><input type="checkbox" id="cb-bb">ボリンジャー</label>
+        <label><input type="checkbox" id="cb-mk" checked>売買サイン</label>
+        <label><input type="checkbox" id="cb-lv" checked>IN・利確・損切り</label>
+        <label><input type="checkbox" id="cb-osc" checked>RSI・MACD</label>
+      </div>
+      <div class="lvbar" id="lvbar"></div>
+    </div>
+    <div id="chart"></div>
+  </section>
+
+  <section class="card" id="fundcard">
+    <h2>ファンダメンタル <span class="hint" id="f-hint"></span></h2>
+    <div class="jcards" id="jcards"></div>
+    <div class="fgrid" id="fgrid"><div class="fp" id="fp-rev"></div><div class="fp" id="fp-prof"></div><div class="fp" id="fp-mgn"></div><div class="fp" id="fp-cf"></div></div>
+    <div class="meta" id="fmeta"></div>
+  </section>
+</div>
+<footer><span></span><span id="gen"></span></footer>
+</div>
+<div id="tip"></div>
+<script src="assets/watch.js"></script>
+<script>const DATA={"info":{"code":"584A","name":"ＬｉＮＫＸ","market":"グロース","sector":"情報・通信業","date":"2026-09-25","price":2492.0,"chg":47.0,"chgp":1.9222903885480573,"biz":"銀行など金融機関向けに、クラウドやAIを活用した基幹システムのモダナイゼーション・構築を支援するフィンテック企業。","fdate":"2025-06-30"},"px":{"show":750,"d":["2026-06-23","2026-06-24","2026-06-25","2026-06-26","2026-06-29","2026-06-30","2026-07-01","2026-07-02","2026-07-03","2026-07-06","2026-07-07","2026-07-08","2026-07-09","2026-07-10","2026-07-13","2026-07-14","2026-07-15","2026-07-16","2026-07-17","2026-07-21","2026-07-22","2026-07-23","2026-07-24","2026-07-27","2026-07-28","2026-07-29","2026-07-30","2026-07-31","2026-08-03","2026-08-04","2026-08-05","2026-08-06","2026-08-07","2026-08-10","2026-08-12","2026-08-13","2026-08-14","2026-08-17","2026-08-18","2026-08-19","2026-08-20","2026-08-21","2026-08-24","2026-08-25","2026-08-26","2026-08-27","2026-08-28","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04","2026-09-07","2026-09-08","2026-09-09","2026-09-10","2026-09-11","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-24","2026-09-25"],"o":[1075,1675,2075,2375,3075,3775,5180,3005,2395,2390,3300,3585,3530,4500,4050,3830,3435,3200,2950,3050,2750,2550,2880,2799,2584,2200,2128,2240,2101,2155,2240,2223,2237,2275,2299,2395,2850,3210,3545,2846,2755,2680,2684,2680,2673,2828,2959,2859,2849,2640,2695,2631,2820,2719,2727,2681,2685,2557,2500,2558,2508,2450,2500,2441],"h":[1375,1675,2075,2575,3075,3775,6340,3125,2806,3025,3725,4290,4090,4690,4250,3990,3520,3370,3020,3095,2851,3070,2995,2832,2624,2200,2237,2300,2214,2218,2497,2278,2298,2325,2419,2839,3130,3270,3655,2872,2846,2734,2850,2745,2855,2960,3120,2921,2864,2707,2759,2885,2890,2848,2746,2764,2689,2575,2568,2579,2519,2513,2558,2512],"l":[921,1675,2075,2200,3075,3775,3125,2795,2343,2361,3105,3300,3525,3850,3700,3490,3155,3040,2725,2710,2558,2550,2636,2600,2198,2100,2050,2115,2075,2120,2223,2185,2172,2222,2288,2360,2580,3195,2919,2709,2661,2635,2652,2627,2635,2736,2845,2765,2700,2622,2601,2615,2669,2701,2700,2677,2555,2511,2497,2498,2415,2435,2435,2441],"c":[1375,1675,2075,2575,3075,3775,3495,2795,2522,3025,3725,3390,4090,3910,3900,3505,3220,3125,2948,2800,2566,3070,2799,2674,2240,2128,2065,2175,2176,2190,2299,2278,2263,2288,2350,2730,2770,3270,2921,2709,2780,2651,2668,2666,2798,2892,2885,2815,2717,2651,2620,2828,2697,2728,2709,2695,2610,2532,2509,2501,2447,2478,2445,2492],"v":[5618100,39600,495900,3471900,34100,18900,3375200,1211900,1784300,2093000,3621300,3376400,1299800,2220700,918100,571900,426200,401700,264100,224300,281800,1224300,432500,206800,394500,161100,124200,190600,71000,60500,151100,50700,50900,48400,77000,500500,851600,149400,1247300,290800,201300,90900,183300,80500,169200,223800,461100,153200,103800,64400,135200,273200,173200,146400,65500,80200,107300,84400,57600,64200,84400,50700,70500,40200]},"fy":[{"fy":"2024-06","sales":827152000.0,"op":138147000.0,"ni":87280000.0,"opm":16.7,"ocf":186175000.0,"fcf":179464000.0,"eqr":88.07,"roe":9.862927011176026,"per":null},{"fy":"2025-06","sales":1373673000.0,"op":336381000.0,"ni":227612000.0,"opm":24.49,"ocf":293499000.0,"fcf":283986000.0,"eqr":84.5,"roe":17.60682081363049,"per":null}],"extra":{"mcap":169.142008,"ev_ebitda":45.642921007300465,"fscore":null,"payout":0.0,"beta":null,"cagr":66.13,"dy":0.0,"roe":17.60682081363049,"opm":24.49,"eqr":84.5,"per":74.32,"pbr":13.08,"sec_per":17.729999999999997,"sec_pbr":2.285,"sec_roe":13.347260469604603,"sec_opm":10.43,"sec_eqr":63.2,"rank":"85.0","nsec":"603"},"srow":{"c":"584A","n":"ＬｉＮＫＸ","m":"グロース","s":"情報・通信業","d":"2026-09-25","p":2492,"chg":1.92,"ts":4,"tt":null,"to":37,"lv":null,"tc":[null,-0.19,null,0.18,0.56,-0.61],"tr":[-6.3,null,null,0,-1.17,1,null,-1,46.4,22,35,0.45],"te":[],"hp0":2065,"hpk":2.02703,"hp":[498,844,705,360,225,474,819,654,999,910,905,710,570,523,436,363,247,496,362,300,86,31,0,54,55,62,115,105,98,110,141,328,348,594,422,318,353,289,297,296,362,408,405,370,322,289,274,376,312,327,318,311,269,230,219,215,188,204,187,211],"hs":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-27,-6,-30,-7,5,-22,-37,-34,-36,-34,-25,-20,-19,-19,-21,-24,-40,-11,-7,-6,-10,-13,-3,1,-1,3,1,4,4],"fs":50,"fc":[-0.5,1,1,1,null,0.28],"fr":[74.3,13.08,2,"実績PER",17.6,5,24.5,66.1,66.1,5,84.5,5,null,1.7,0,0],"ff":["決算が古い"],"fp":"2025-06-30","dv":61,"mc":169},"smeta":{"tw":{"ma":0.2,"macd":0.2,"ichi":0.2,"rsi":0.15,"bb":0.15,"vol":0.1},"fw":{"val":0.25,"prof":0.2,"grow":0.2,"safe":0.15,"fs":0.1,"cash":0.1},"levels":{"t":[50,20,-20,-50],"f":[55,20,-20,-55],"tr":[50,20,-20,-50],"os":[70,35,-35,-70],"ad":[60,40,-40,-60]},"names":["強い買い","買い","中立","売り","強い売り"]},"gen":"2026-09-25 16:44"};</script>
+<script src="assets/one.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ティアフォー（593A） | 株式分析ダッシュボード</title>
+<script>(function(){let t;try{t=localStorage.getItem('fdb-theme')}catch(e){}if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="assets/one.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1 id="h-name"></h1><span class="cd" id="h-code"></span>
+  <span class="px" id="h-px"></span><span class="chg" id="h-chg"></span>
+  <span class="meta" id="h-meta"></span>
+  <span class="sp"><button class="tbtn" id="watchbtn" hidden>☆ 監視に追加</button><a class="tbtn" href="../index.html" style="text-decoration:none">トップ</a><a class="tbtn" href="index.html" style="text-decoration:none">銘柄一覧</a><button class="tbtn" id="theme">明暗</button></span>
+</header>
+<p class="biz" id="biz"></p>
+
+<section class="card" id="sigcard">
+  <div class="hero">
+    <div>
+      <div class="big" id="big"></div>
+      <div class="n1" id="notes"></div>
+      <div class="plan" id="plan"></div>
+      <div class="wbox" id="wbox" hidden></div>
+    </div>
+    <div class="quad" id="quad"></div>
+  </div>
+  <div class="sigfoot"><button class="tgl" id="sig-tgl" aria-expanded="false"><span class="tri">▾</span> 内訳・推移を見る</button></div>
+  <div class="sigdet" id="sigdet" hidden>
+    <div><h5>テクニカルの内訳</h5><div id="partsT"></div></div>
+    <div><h5>ファンダメンタルの内訳</h5><div id="partsF"></div></div>
+    <div><h5>テクニカルスコアの推移</h5><div class="spk" id="spk"></div></div>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="card" id="chartcard">
+    <div class="bar">
+      <h2 style="margin:0">チャート</h2>
+      <div class="seg" id="rng"><button data-n="63">3ヶ月</button><button data-n="126" class="on">6ヶ月</button><button data-n="250">1年</button><button data-n="750">3年</button></div>
+      <div class="lg" id="lg-ichi"><span><i style="background:var(--tenkan)"></i>転換線</span><span><i style="background:var(--kijun)"></i>基準線</span><span><i style="background:var(--chikou)"></i>遅行</span><span><i class="sq" style="background:var(--cloudU)"></i>陽雲</span><span><i class="sq" style="background:var(--cloudD)"></i>陰雲</span></div>
+      <button class="tgl" id="ch-tgl" aria-expanded="false" style="margin-left:auto"><span class="tri">▾</span> 詳細</button>
+    </div>
+    <div id="ch-det" hidden>
+      <div class="lg" style="margin-bottom:2px">
+        <label><input type="checkbox" id="cb-ichi" checked>一目均衡表</label>
+        <label><input type="checkbox" id="cb-ma"><i style="background:var(--ma25)"></i>25日<i style="background:var(--ma75);margin-left:4px"></i>75日</label>
+        <label><input type="checkbox" id="cb-200">200日</label>
+        <label><input type="checkbox" id="cb-bb">ボリンジャー</label>
+        <label><input type="checkbox" id="cb-mk" checked>売買サイン</label>
+        <label><input type="checkbox" id="cb-lv" checked>IN・利確・損切り</label>
+        <label><input type="checkbox" id="cb-osc" checked>RSI・MACD</label>
+      </div>
+      <div class="lvbar" id="lvbar"></div>
+    </div>
+    <div id="chart"></div>
+  </section>
+
+  <section class="card" id="fundcard">
+    <h2>ファンダメンタル <span class="hint" id="f-hint"></span></h2>
+    <div class="jcards" id="jcards"></div>
+    <div class="fgrid" id="fgrid"><div class="fp" id="fp-rev"></div><div class="fp" id="fp-prof"></div><div class="fp" id="fp-mgn"></div><div class="fp" id="fp-cf"></div></div>
+    <div class="meta" id="fmeta"></div>
+  </section>
+</div>
+<footer><span></span><span id="gen"></span></footer>
+</div>
+<div id="tip"></div>
+<script src="assets/watch.js"></script>
+<script>const DATA={"info":{"code":"593A","name":"ティアフォー","market":"グロース","sector":"情報・通信業","date":"2026-09-25","price":1962.0,"chg":-158.0,"chgp":-7.452830188679245,"biz":"自動運転向けオープンソースソフトウェアを開発し、センサー機器やシステム構築などの関連サービスも提供する。","fdate":"2025-09-30"},"px":{"show":750,"d":["2026-07-22","2026-07-23","2026-07-24","2026-07-27","2026-07-28","2026-07-29","2026-07-30","2026-07-31","2026-08-03","2026-08-04","2026-08-05","2026-08-06","2026-08-07","2026-08-10","2026-08-12","2026-08-13","2026-08-14","2026-08-17","2026-08-18","2026-08-19","2026-08-20","2026-08-21","2026-08-24","2026-08-25","2026-08-26","2026-08-27","2026-08-28","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04","2026-09-07","2026-09-08","2026-09-09","2026-09-10","2026-09-11","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-24","2026-09-25"],"o":[1009,1085,1210,1120,1009,1001,1026,1013,1015,1000,1034,1009,928,916,917,1005,1030,1030,936,900,890,1003,1117,1132,1340,1338,1702,2339,2249,2389,3110,3500,2670,2533,2265,2295,2165,2206,2111,2045,1924,1976,2067,2120],"h":[1081,1268,1285,1160,1064,1066,1037,1048,1066,1045,1045,1012,931,925,1020,1009,1041,1050,950,915,1033,1110,1220,1415,1429,1628,1999,2399,2773,3040,3725,3790,3155,2583,2348,2336,2232,2207,2207,2112,1978,1977,2209,2121],"l":[896,1055,1088,1012,990,992,991,998,957,989,997,930,871,895,916,974,985,937,900,880,885,985,1088,1126,1285,1288,1695,2300,2156,2356,3000,2870,2392,2273,2181,2150,2090,2039,2045,1916,1810,1865,2046,1956],"c":[1015,1240,1102,1057,1009,1055,1009,1011,987,1016,1009,936,911,909,1008,999,998,952,906,883,1033,1057,1145,1391,1328,1599,1999,2399,2539,3040,3570,2870,2409,2354,2275,2250,2134,2138,2045,1940,1978,1977,2120,1962],"v":[19558000,40755300,20430100,9290900,6832900,4127800,3063700,3181300,3524800,1920900,2695100,4083200,2867800,1020400,3128400,1397100,2284100,2656000,1719000,1451700,9613200,15193900,19230000,29282500,20244400,25473400,38104200,1948100,80030600,69659100,65990000,35627300,64500200,72167600,17435800,12171400,9277900,6187800,5920300,6410300,8875000,6102800,10746600,9893000]},"fy":[{"fy":"2024-09","sales":3871000000.0,"op":-7230000000.0,"ni":-4834000000.0,"opm":-186.77,"ocf":-4573000000.0,"fcf":-5214000000.0,"eqr":83.24,"roe":-26.91386893825511,"per":null},{"fy":"2025-09","sales":6410000000.0,"op":-10506000000.0,"ni":-4799000000.0,"opm":-163.9,"ocf":-7282000000.0,"fcf":-8522000000.0,"eqr":74.9,"roe":-36.44441069258809,"per":null}],"extra":{"mcap":1358.1450442,"ev_ebitda":null,"fscore":null,"payout":null,"beta":null,"cagr":65.65,"dy":0.0,"roe":-36.44441069258809,"opm":-163.9,"eqr":74.9,"per":null,"pbr":13.53,"sec_per":17.729999999999997,"sec_pbr":2.285,"sec_roe":13.347260469604603,"sec_opm":10.43,"sec_eqr":63.2,"rank":"423.0","nsec":"603"},"srow":{"c":"593A","n":"ティアフォー","m":"グロース","s":"情報・通信業","d":"2026-09-25","p":1962,"chg":-7.45,"ts":-8,"tt":null,"to":6,"lv":null,"tc":[null,-0.29,null,-0.18,0.3,0.17],"tr":[-2.7,null,null,1,-4.57,1,null,-1,53.7,35,54,0.33],"te":[],"hp0":883,"hpk":2.68969,"hp":[49,133,81,65,47,64,47,48,39,49,47,20,10,10,46,43,43,26,9,0,56,65,97,189,165,266,415,564,616,802,999,739,567,547,518,508,465,467,432,393,407,407,460,401],"hs":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-52,-50,-51,-44,-34,-33,-27,-27,-8],"fs":-31,"fc":[-1,-1,1,0.5,null,-1],"fr":[null,13.53,1,"PBR",-36.4,1,-163.9,65.6,65.7,5,74.9,4,null,-6.3,0,0],"ff":["赤字"],"fp":"2025-09-30","dv":45.5,"mc":1358},"smeta":{"tw":{"ma":0.2,"macd":0.2,"ichi":0.2,"rsi":0.15,"bb":0.15,"vol":0.1},"fw":{"val":0.25,"prof":0.2,"grow":0.2,"safe":0.15,"fs":0.1,"cash":0.1},"levels":{"t":[50,20,-20,-50],"f":[55,20,-20,-55],"tr":[50,20,-20,-50],"os":[70,35,-35,-70],"ad":[60,40,-40,-60]},"names":["強い買い","買い","中立","売り","強い売り"]},"gen":"2026-09-25 16:44"};</script>
+<script src="assets/one.js"></script>
+</body>
+</html>

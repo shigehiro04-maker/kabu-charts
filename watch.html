@@ -1,0 +1,116 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>監視銘柄一覧 | 東証 株分析</title>
+<script>(function(){var m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+:root{--bg:#f9f9f7;--card:#fcfcfb;--fg:#0b0b0b;--fg2:#52514e;--mut:#898781;--line:#e1e0d9;
+--hover:rgba(11,11,11,.04);--acc:#2a78d6;--up:#c93a3a;--dn:#2E7D6B;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){
+--bg:#0d0d0d;--card:#1a1a19;--fg:#fff;--fg2:#c3c2b7;--mut:#898781;--line:#2c2c2a;
+--hover:rgba(255,255,255,.05);--acc:#3987e5;--up:#e66767;--dn:#3FA58C;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0d0d;--card:#1a1a19;--fg:#fff;--fg2:#c3c2b7;--mut:#898781;--line:#2c2c2a;
+--hover:rgba(255,255,255,.05);--acc:#3987e5;--up:#e66767;--dn:#3FA58C;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 system-ui,-apple-system,"Hiragino Sans","Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+h1{font-size:21px;margin:0}
+.sub{color:var(--fg2);font-size:12.5px}
+.btn{border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:8px;padding:5px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+.search{position:relative;margin:18px 0 6px}
+.search input{width:100%;padding:12px 14px;font-size:16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg);outline:none}
+.search input:focus{border-color:var(--acc)}
+#res{margin-top:6px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+#res:empty{display:none}
+.row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row b{font-size:13px;min-width:42px}
+.row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row small{color:var(--mut);font-size:11.5px}
+.row .go{display:flex;gap:6px;flex-shrink:0}
+.row .go a{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:3px 8px;color:var(--fg)}
+.row .go a:hover{border-color:var(--acc);color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.card.wide{grid-column:1/-1}
+.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px 14px;transition:border-color .15s,background .15s}
+.card:hover{border-color:var(--acc);background:var(--hover)}
+.card .t{display:flex;align-items:center;gap:10px;font-size:16.5px;font-weight:700}
+.card .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--hover);border:1px solid var(--line);flex-shrink:0}
+.card .ic svg{width:19px;height:19px;stroke:var(--acc);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card p{margin:8px 0 10px;color:var(--fg2);font-size:13px}
+.card .ft{display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-size:11.5px}
+.card .ft span:last-child{color:var(--acc);font-size:13px}
+.sec{margin-top:26px;font-size:13px;font-weight:700;color:var(--fg2)}
+.sec small{font-weight:400;color:var(--mut)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.links a{font-size:12.5px;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--fg);background:var(--card)}
+.links a:hover{border-color:var(--acc);color:var(--acc)}
+#fav:empty::before{content:"チャート一覧の ★ で登録した銘柄がここに出ます";color:var(--mut);font-size:12.5px}
+.note{margin-top:28px;color:var(--mut);font-size:11.5px}
+/* 監視銘柄 */
+#watch{margin-top:18px}
+#watch .hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--fg2)}
+#watch .hd small{font-weight:400;color:var(--mut)}
+#watch .hd .btn{margin-left:auto;padding:3px 9px;font-size:12px}
+.badge{display:inline-block;background:var(--up);color:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:1px 8px}
+#wl{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.wr{display:grid;grid-template-columns:minmax(150px,210px) 1fr auto;gap:6px 12px;align-items:center;padding:9px 12px;border-top:1px solid var(--line)}
+.wr:first-child{border-top:0}
+.wr.isnew{background:var(--hover)}
+.wr .nm a{color:var(--fg);text-decoration:none;font-weight:600}.wr .nm a:hover{color:var(--acc)}
+.wr .nm small{display:block;color:var(--mut);font-size:11.5px;font-weight:400}
+.wr .lv{display:flex;flex-wrap:wrap;gap:4px 6px}
+.wl{font-size:12px;padding:2px 8px;border-radius:7px;border:1px solid var(--line);white-space:nowrap;color:var(--fg2)}
+.wl b{color:var(--fg)}
+.wl.hitB{background:var(--acc);border-color:var(--acc);color:#fff}.wl.hitR{background:var(--up);border-color:var(--up);color:#fff}.wl.hitB b,.wl.hitR b{color:#fff}
+.wl.skip{text-decoration:line-through;opacity:.7}.wl.wait{border-style:dashed}
+.wl .new{font-size:10px;font-weight:800;margin-left:4px}
+.wr .x{border:0;background:transparent;color:var(--mut);font-size:16px;cursor:pointer;padding:2px 6px}.wr .x:hover{color:var(--up)}
+#wl .empty{padding:10px 12px;color:var(--mut);font-size:12.5px}
+@media(max-width:640px){.wr{grid-template-columns:1fr auto}.wr .lv{grid-column:1/-1;grid-row:2}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding:14px 12px 40px}h1{font-size:18px}}
+</style>
+</head><body><div class="wrap">
+<header><div><h1><a href="./index.html" title="トップへ" style="text-decoration:none;color:inherit;margin-right:8px">‹</a>監視銘柄一覧</h1>
+<div class="sub">「☆ 監視に追加」した時点の IN・利確・損切りに、その後の株価が来たか（日足の高値・安値、毎営業日の更新後に反映）</div></div>
+<button class="btn" id="theme" type="button">明暗</button></header>
+<section id="watch" hidden><div class="hd"><span id="wnew"></span><small id="wsub"></small><button class="btn" id="wackall" hidden>すべて確認済みにする</button></div>
+<div id="wl"></div></section>
+<p class="note">極端な急騰・急落（前日終値から ATR(14) の3倍超）の日に到達した水準は「急変で通過」として数えません。
+追加時点で既に水準の先にあった場合は、いったん離れてから来たときに到達とします。監視銘柄はこの端末（ブラウザ）に保存されます。</p>
+</div>
+<script src="./one/assets/watch.js"></script>
+<script>
+const S=[];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// 監視銘柄（株式分析ダッシュボードの「☆ 監視に追加」。判定は one/assets/watch.js）
+function drawWatch(){const K=window.KW,box=$('watch');if(!K)return;box.hidden=false;
+ const W=K.list(),by={};S.forEach(x=>by[x[0]]=x);
+ const dd=s=>s?s.slice(5).replace('-','/'):'',n0=v=>v==null?'―':Number(v).toLocaleString('ja-JP',{maximumFractionDigits:1});
+ const val=s=>s.dir==='zone'?n0(s.lo)+'〜'+n0(s.hi):n0(s.p);
+ if(!W.length){$('wl').innerHTML='<div class="empty">株式分析ダッシュボードの各銘柄で「☆ 監視に追加」を押すと、その時点の IN・利確・損切りの値段を記録し、到達したらここに表示します（この端末に保存）。</div>';
+  $('wnew').innerHTML='';$('wsub').textContent='';$('wackall').hidden=true;return;}
+ $('wsub').textContent=W.length+'銘柄・日足の高値・安値で判定（毎営業日の更新後に反映）';
+ $('wl').innerHTML=W.map(w=>`<div class="wr" id="w-${esc(w.code)}"><div class="nm"><a href="./one/${esc(w.code)}.html">${esc(w.code)} ${esc(w.name)}</a><small>${dd(w.asof)}の目安で監視・読み込み中…</small></div><div class="lv"></div>
+  <button class="x" title="監視をやめる" data-c="${esc(w.code)}">×</button></div>`).join('');
+ $('wl').querySelectorAll('.x').forEach(b=>b.onclick=()=>{if(confirm(b.dataset.c+' の監視をやめますか？')){K.remove(b.dataset.c);drawWatch();}});
+ let nNew=0,done=0;const evs={};
+ const fin=()=>{$('wnew').innerHTML=nNew?`<span class="badge">新たに到達 ${nNew}件</span>`:'';$('wackall').hidden=!nNew;};
+ W.forEach(w=>K.loadPx(w.code,'./one/').then(P=>{const ev=K.evaluate(w,P),row=$('w-'+w.code);evs[w.code]=ev;
+   const nw=ev.levels.filter(s=>K.isNew(w,s)).length;nNew+=nw;row.classList.toggle('isnew',nw>0);
+   const last=ev.last,chg=w.px?(last.c/w.px-1)*100:null;
+   row.querySelector('small').textContent=`${dd(w.asof)}の目安（当時 ${n0(w.px)}円）→ 現在 ${n0(last.c)}円${chg==null?'':'（'+(chg>=0?'+':'')+chg.toFixed(1)+'%）'}・${dd(last.d)}終値`;
+   row.querySelector('.lv').innerHTML=ev.levels.map(s=>{
+    if(s.state==='hit')return `<span class="wl ${s.k==='stop'?'hitR':'hitB'}">${s.label} <b>${val(s)}</b> ${dd(s.date)}到達${K.isNew(w,s)?'<span class="new">NEW</span>':''}</span>`;
+    if(s.state==='skipped')return `<span class="wl skip" title="極端な値動きの日（前日終値からATRの3倍超）に通過したため数えていません">${s.label} ${val(s)} 急変で通過 ${dd(s.date)}</span>`;
+    return `<span class="wl${s.state==='wait'?' wait':''}" title="${s.state==='wait'?'追加時点で既にこの水準の先にあったため、いったん離れてから判定します':'未到達'}">${s.label} <b>${val(s)}</b></span>`;}).join('')
+    +(ev.extreme.length?`<span class="wl" title="この期間に前日終値からATRの3倍を超えて動いた日">急変日 ${ev.extreme.map(x=>dd(x.d)+'('+(x.chg>=0?'+':'')+x.chg.toFixed(1)+'%)').join('・')}</span>`:'');
+  }).catch(()=>{const row=$('w-'+w.code);if(row)row.querySelector('small').textContent='株価を読み込めませんでした';}).finally(()=>{if(++done===W.length)fin();}));
+ $('wackall').onclick=()=>{W.forEach(w=>{if(evs[w.code])K.ack(w.code,evs[w.code].levels);});drawWatch();};}
+drawWatch();
+$('theme').addEventListener('click',()=>{const d=document.documentElement;
+ const cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+ const n=cur==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}});
+</script></body></html>
