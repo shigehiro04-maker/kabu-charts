@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<script>
+/* 親ページから ?theme=dark|light で表示を指定できる。指定が無ければOSの設定に従う。 */
+(function(){try{
+  var m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash);
+  if(m)document.documentElement.setAttribute("data-theme",m[1]);
+}catch(e){}})();
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>429A テクセンドフォトマスク チャート</title>
+<style>
+:root{--bg:#fff;--fg:#1a1a1a;--mut:#6b7280;--line:#e5e7eb;--up:#D14343;--dn:#2E7D6B;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;}
+.wrap{max-width:1280px;margin:0 auto;padding:20px 18px 40px}
+h1{font-size:20px;margin:0 0 2px;font-weight:650;letter-spacing:.01em}
+h1 .mk{font-size:11.5px;font-weight:600;color:var(--mut);border:1px solid var(--line);
+border-radius:5px;padding:2px 7px;margin-left:8px;vertical-align:middle;white-space:nowrap}
+h1 .mk:empty{display:none}
+h1 .sec{margin-left:5px}
+h1 .back{text-decoration:none;color:var(--mut);margin-right:8px;font-size:22px;vertical-align:-1px}
+h1 .back:hover{color:var(--fg)}
+.star-btn{background:none;border:0;font-size:19px;line-height:1;color:var(--line);
+cursor:pointer;padding:2px 6px;vertical-align:middle}
+.star-btn:hover{color:#c9a227}
+.star-btn.on{color:#E8A33D}
+.price{display:flex;align-items:baseline;gap:12px;margin:6px 0 16px;flex-wrap:wrap}
+.price b{font-size:30px;font-weight:650;font-variant-numeric:tabular-nums}
+.chg{font-size:15px;font-variant-numeric:tabular-nums}
+.chg.up{color:var(--up)}.chg.dn{color:var(--dn)}
+.asof{color:var(--mut);font-size:13px}
+.bar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.seg{display:inline-flex;background:#f3f4f6;border-radius:9px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--mut);font:inherit;font-size:13px;
+padding:6px 14px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.seg button:hover{color:var(--fg)}
+.seg button.on{background:#fff;color:var(--fg);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.toggles{display:flex;gap:12px;font-size:13px;color:var(--mut);flex-wrap:wrap}
+.toggles label{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);
+margin:0 0 6px;font-variant-numeric:tabular-nums}
+.legend i{display:inline-block;width:14px;height:2.5px;border-radius:2px;margin-right:5px;
+vertical-align:middle}
+.chart{position:relative}
+canvas{width:100%;display:block;cursor:crosshair}
+#tip{position:absolute;pointer-events:none;background:rgba(255,255,255,.97);
+border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:12px;line-height:1.65;
+box-shadow:0 4px 14px rgba(0,0,0,.12);display:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+#tip .d{font-weight:650;margin-bottom:3px}
+#tip span{color:var(--mut)}
+.note{color:var(--mut);font-size:12px;margin-top:12px;line-height:1.7}
+@media(max-width:640px){
+.wrap{padding:14px 10px 30px}
+h1{font-size:17px}
+.price b{font-size:25px}
+.price{gap:8px;margin:4px 0 12px}
+.asof{font-size:12px;flex-basis:100%}
+.bar{gap:10px;margin-bottom:8px}
+.seg{width:100%;justify-content:space-between}
+.seg button{flex:1;padding:9px 4px;font-size:13px;text-align:center}
+.toggles{gap:10px;font-size:12.5px}
+.toggles label{padding:2px 0}
+.toggles input{width:17px;height:17px}
+.legend{gap:10px 12px;font-size:11.5px}
+.legend .sg{display:none}   /* σの数値はツールチップで確認できるので省略 */
+.note{font-size:11.5px}
+#tip{font-size:11.5px;padding:7px 9px}
+}
+/* 既定はOSの設定に従う。ただし data-theme が付いていればそちらを優先する
+   （ファンダメンタル分析の画面に埋め込まれたとき、親の表示に合わせるため） */
+@media(prefers-color-scheme:dark){
+:root:not([data-theme="light"]){--bg:#141517;--fg:#e8e8e8;--mut:#9aa0a6;--line:#2c2e33}
+:root:not([data-theme="light"]) .seg{background:#1f2124}
+:root:not([data-theme="light"]) .seg button.on{background:#33363b}
+:root:not([data-theme="light"]) #tip{background:rgba(28,30,33,.97)}
+}
+:root[data-theme="dark"]{--bg:#141517;--fg:#e8e8e8;--mut:#9aa0a6;--line:#2c2e33}
+:root[data-theme="dark"] .seg{background:#1f2124}
+:root[data-theme="dark"] .seg button.on{background:#33363b}
+:root[data-theme="dark"] #tip{background:rgba(28,30,33,.97)}
+</style></head><body><div class="wrap">
+<h1><a class="back" href="./index.html" title="一覧へ">‹</a>429A テクセンドフォトマスク<span class="mk">プライム</span><span class="mk sec">その他製品</span><button id="star" class="star-btn" aria-label="お気に入り">★</button></h1>
+<div class="price"><b id="last"></b><span class="chg" id="chg"></span><span class="asof" id="asof"></span></div>
+<div class="bar">
+  <div class="seg" id="periods"></div>
+  <div class="toggles">
+    <label><input type="checkbox" id="tBB" checked>ボリンジャーバンド</label>
+    <label><input type="checkbox" id="tMA" checked>移動平均線</label>
+    <label><input type="checkbox" id="tVol" checked>出来高</label>
+    <label><input type="checkbox" id="tRSI" checked>RSI(14)</label>
+    <label><input type="checkbox" id="tRCI" checked>RCI(9/26)</label>
+  </div>
+</div>
+<div class="legend" id="legend"></div>
+<div class="chart"><canvas id="cv"></canvas><div id="tip"></div></div>
+<p class="note" id="note"></p>
+</div>
+<script>
+const CODE = "429A";
+// お気に入り銘柄（一覧ページと共有。この端末のブラウザに保存されます）
+(function(){
+  const el=document.getElementById("star");
+  let w=new Set();
+  try{ w=new Set(JSON.parse(localStorage.getItem("kabuWatch")||"[]")); }catch(e){}
+  const paint=()=>el.classList.toggle("on", w.has(CODE));
+  paint();
+  el.addEventListener("click",()=>{
+    if(w.has(CODE)) w.delete(CODE); else w.add(CODE);
+    try{ localStorage.setItem("kabuWatch",JSON.stringify([...w])); }catch(e){}
+    paint();
+  });
+})();
+const RAW = [["2025-10-16",3498.16,3566.76,2954.33,3311.99,31187700],["2025-10-17",3429.57,3645.15,3341.38,3360.98,15813900],["2025-10-20",3547.16,3650.05,3439.37,3576.55,5429700],["2025-10-21",3620.65,3645.15,3439.37,3439.37,3962900],["2025-10-22",3424.67,3498.16,3385.48,3449.17,1849300],["2025-10-23",3380.58,3483.47,3184.6,3468.77,1897100],["2025-10-24",3527.56,3547.16,3419.77,3517.76,1491000],["2025-10-27",3537.36,3542.26,3360.98,3380.58,1999600],["2025-10-28",3331.58,3351.18,3199.3,3341.38,1757500],["2025-10-29",3311.99,3316.89,3204.2,3209.1,1093900],["2025-10-30",3184.6,3243.4,3037.62,3037.62,1910900],["2025-10-31",3037.62,3458.97,3037.62,3409.97,3251500],["2025-11-04",3380.58,3429.57,3282.59,3316.89,938300],["2025-11-05",3223.8,3356.08,3204.2,3316.89,1149500],["2025-11-06",3341.38,3341.38,3135.61,3160.11,1208700],["2025-11-07",3135.61,3204.2,3111.11,3155.21,449200],["2025-11-10",3174.8,3189.5,3062.12,3101.31,501500],["2025-11-11",3145.41,3228.7,3135.61,3179.7,678000],["2025-11-12",3248.29,3351.18,3194.4,3346.28,1163000],["2025-11-13",3243.4,3458.97,3189.5,3424.67,1658400],["2025-11-14",3238.5,3370.78,3238.5,3253.19,885400],["2025-11-17",3253.19,3409.97,3253.19,3365.88,813700],["2025-11-18",3336.48,3351.18,3116.01,3135.61,1104100],["2025-11-19",3101.31,3160.11,2959.23,3062.12,1116900],["2025-11-20",3267.89,3277.69,3032.72,3067.02,1052000],["2025-11-21",2939.63,2969.03,2805.39,2847.52,3373300],["2025-11-25",3003.33,3003.33,2859.28,2893.58,1973800],["2025-11-26",2939.63,2983.73,2903.38,2944.53,946900],["2025-11-27",3081.72,3174.8,3076.82,3111.11,7177600],["2025-11-28",3071.92,3282.59,3062.12,3282.59,1569300],["2025-12-01",3223.8,3228.7,2993.53,3008.22,1408400],["2025-12-02",3003.33,3027.82,2959.23,2978.83,631500],["2025-12-03",3022.92,3111.11,3018.02,3081.72,639300],["2025-12-04",3047.42,3081.72,2988.63,3022.92,539600],["2025-12-05",3008.22,3096.41,3008.22,3052.32,430400],["2025-12-08",3042.52,3067.02,3003.33,3052.32,281900],["2025-12-09",3042.52,3062.12,2978.83,2978.83,377900],["2025-12-10",3013.12,3032.72,2936.69,2944.53,565700],["2025-12-11",3086.62,3150.31,3022.92,3042.52,1384500],["2025-12-12",3145.41,3169.9,3008.23,3042.52,715300],["2025-12-15",3008.22,3032.72,2939.63,2978.83,664400],["2025-12-16",2949.43,2998.43,2886.72,2889.66,1062800],["2025-12-17",2949.43,2978.83,2922.0,2944.53,735200],["2025-12-18",2913.18,2918.08,2858.3,2884.76,618500],["2025-12-19",2885.74,2907.3,2793.63,2816.17,1219700],["2025-12-22",2851.44,2998.43,2851.44,2983.73,1362100],["2025-12-23",2969.03,3003.33,2917.1,2929.83,648400],["2025-12-24",2939.63,2988.63,2938.65,2973.93,693700],["2025-12-25",2969.03,2998.43,2939.63,2964.13,543300],["2025-12-26",2964.13,2983.73,2915.14,2915.14,855100],["2025-12-29",2964.13,2983.73,2912.2,2954.33,418900],["2025-12-30",2944.53,3003.33,2923.96,2969.03,409200],["2026-01-05",3037.62,3047.42,2998.43,3018.02,533200],["2026-01-06",3047.42,3165.01,3032.72,3091.51,924100],["2026-01-07",3096.41,3174.8,3086.62,3120.91,819300],["2026-01-08",3116.01,3135.61,3037.62,3037.62,461200],["2026-01-09",3042.52,3057.22,2993.53,3032.72,367700],["2026-01-13",3086.62,3120.91,3052.32,3052.32,601300],["2026-01-14",3057.22,3096.41,2944.53,2969.03,617400],["2026-01-15",2944.53,2978.83,2878.88,2927.88,1364900],["2026-01-16",2959.23,3008.22,2929.83,2934.73,701100],["2026-01-19",2938.65,2988.63,2938.65,2978.83,543900],["2026-01-20",2964.13,2978.83,2891.62,2891.62,807900],["2026-01-21",2857.32,2929.83,2842.63,2929.83,623700],["2026-01-22",2938.65,3067.02,2930.81,3022.92,901500],["2026-01-23",3018.02,3027.82,2939.63,2993.53,428100],["2026-01-26",2949.43,2969.03,2911.22,2944.53,439100],["2026-01-27",2949.43,2964.13,2916.12,2944.53,288000],["2026-01-28",2983.73,3022.92,2944.53,2954.33,546700],["2026-01-29",2988.63,2988.63,2918.08,2934.73,789200],["2026-01-30",2934.73,2954.33,2900.44,2954.33,823000],["2026-02-02",2906.32,2939.63,2853.4,2892.6,996400],["2026-02-03",2884.76,2949.43,2872.02,2929.83,744000],["2026-02-04",2870.06,2871.04,2769.13,2850.46,1300900],["2026-02-05",2801.47,2862.22,2801.47,2853.4,583700],["2026-02-06",2843.61,2881.82,2812.25,2880.84,559800],["2026-02-09",2939.63,2969.03,2920.04,2969.03,874800],["2026-02-10",3018.02,3067.02,3003.33,3037.62,750800],["2026-02-12",3086.62,3165.01,3067.02,3081.72,1370100],["2026-02-13",3125.81,3174.8,2969.03,3091.51,1220400],["2026-02-16",3101.31,3101.31,2983.73,3008.22,588200],["2026-02-17",3018.02,3071.92,2983.73,3062.12,484600],["2026-02-18",3052.32,3067.02,2988.63,3027.82,359000],["2026-02-19",2998.43,3022.92,2954.33,2978.83,448200],["2026-02-20",2964.13,2969.03,2874.96,2886.72,548600],["2026-02-24",2871.04,2902.4,2852.42,2883.78,544500],["2026-02-25",2918.08,2949.43,2834.79,2837.73,757500],["2026-02-26",2910.24,3331.58,2891.62,3307.09,3994400],["2026-02-27",3233.6,3414.87,3199.3,3311.99,4131400],["2026-03-02",3135.61,3277.69,3125.81,3277.69,1053300],["2026-03-03",3346.28,3405.08,3125.81,3140.51,1336500],["2026-03-04",3116.01,3248.3,2939.63,2949.43,1320700],["2026-03-05",3135.61,3233.6,3076.82,3130.71,898700],["2026-03-06",3101.31,3125.81,3032.72,3101.31,450200],["2026-03-09",2929.83,2973.93,2817.15,2909.26,1100300],["2026-03-10",3052.32,3096.41,3027.82,3086.62,528300],["2026-03-11",3125.81,3145.41,3062.12,3071.92,383000],["2026-03-12",3052.32,3067.02,2983.73,3022.92,283200],["2026-03-13",2954.33,3008.22,2931.79,2983.73,323400],["2026-03-16",2983.73,3018.02,2944.53,2998.43,245300],["2026-03-17",3018.02,3027.82,2924.94,2934.73,343100],["2026-03-18",2964.13,3037.62,2949.43,3037.62,238600],["2026-03-19",3027.82,3086.62,2973.93,2973.93,574800],["2026-03-23",2880.84,2887.7,2724.06,2742.68,1019300],["2026-03-24",2840.67,2843.61,2675.07,2695.64,909700],["2026-03-25",2764.24,2845.57,2759.34,2803.43,800000],["2026-03-26",2812.25,2817.15,2739.74,2757.38,753300],["2026-03-27",2708.38,2742.68,2674.09,2727.0,813500],["2026-03-30",2692.0,2793.0,2671.0,2793.0,1103700],["2026-03-31",2901.0,2988.0,2862.0,2946.0,2024900],["2026-04-01",3095.0,3135.0,3035.0,3045.0,1236900],["2026-04-02",3115.0,3210.0,3080.0,3130.0,1208100],["2026-04-03",3300.0,3350.0,3260.0,3340.0,1379500],["2026-04-06",3280.0,3325.0,3205.0,3265.0,530800],["2026-04-07",3265.0,3350.0,3240.0,3350.0,702800],["2026-04-08",3400.0,3460.0,3350.0,3420.0,1493300],["2026-04-09",3445.0,3470.0,3360.0,3370.0,1171100],["2026-04-10",3390.0,3445.0,3250.0,3250.0,1032600],["2026-04-13",3285.0,3325.0,3210.0,3315.0,828300],["2026-04-14",3455.0,3630.0,3455.0,3610.0,2796700],["2026-04-15",3800.0,3970.0,3650.0,3875.0,3751000],["2026-04-16",3930.0,3970.0,3795.0,3910.0,1699700],["2026-04-17",3855.0,3935.0,3750.0,3785.0,746100],["2026-04-20",3805.0,3810.0,3710.0,3765.0,799400],["2026-04-21",3875.0,3915.0,3825.0,3835.0,803000],["2026-04-22",3845.0,3935.0,3700.0,3755.0,1180100],["2026-04-23",3795.0,3835.0,3635.0,3660.0,735200],["2026-04-24",3730.0,3985.0,3720.0,3980.0,1559400],["2026-04-27",4030.0,4105.0,3860.0,3950.0,1600400],["2026-04-28",3980.0,4045.0,3890.0,3950.0,2966300],["2026-04-30",3900.0,4115.0,3900.0,4070.0,1355600],["2026-05-01",4050.0,4120.0,4000.0,4100.0,843000],["2026-05-07",4300.0,4600.0,4280.0,4530.0,1958100],["2026-05-08",4510.0,5080.0,4470.0,5070.0,2323200],["2026-05-11",5170.0,5290.0,4950.0,5190.0,1664000],["2026-05-12",5190.0,5190.0,4700.0,4770.0,2930400],["2026-05-13",4460.0,4760.0,4455.0,4755.0,1414800],["2026-05-14",4475.0,4625.0,4315.0,4365.0,2332300],["2026-05-15",4410.0,4430.0,4165.0,4220.0,1355400],["2026-05-18",4210.0,4390.0,4210.0,4315.0,963400],["2026-05-19",4315.0,4365.0,4060.0,4130.0,887700],["2026-05-20",4060.0,4065.0,3845.0,3885.0,971800],["2026-05-21",4070.0,4150.0,4015.0,4075.0,641100],["2026-05-22",4145.0,4250.0,4045.0,4065.0,727300],["2026-05-25",4445.0,4755.0,4425.0,4690.0,1592400],["2026-05-26",4720.0,4730.0,4465.0,4520.0,1109800],["2026-05-27",4590.0,4635.0,4310.0,4335.0,829800],["2026-05-28",4275.0,4595.0,4215.0,4540.0,1180000],["2026-05-29",4475.0,4680.0,4460.0,4595.0,1102600],["2026-06-01",4650.0,4670.0,4070.0,4120.0,1592600],["2026-06-02",4150.0,4300.0,3935.0,4075.0,1027300],["2026-06-03",4105.0,4315.0,4000.0,4190.0,977600],["2026-06-04",4210.0,4385.0,4175.0,4180.0,844200],["2026-06-05",4110.0,4145.0,3950.0,4085.0,698900],["2026-06-08",3735.0,3885.0,3730.0,3800.0,1161900],["2026-06-09",3900.0,3925.0,3685.0,3685.0,798500],["2026-06-10",3650.0,3795.0,3620.0,3640.0,894000],["2026-06-11",3520.0,3690.0,3485.0,3620.0,666900],["2026-06-12",3900.0,3975.0,3635.0,3680.0,1019900],["2026-06-15",3960.0,4120.0,3890.0,4070.0,1112000],["2026-06-16",4140.0,4335.0,4045.0,4195.0,1035800],["2026-06-17",4125.0,4320.0,4105.0,4215.0,580500],["2026-06-18",4250.0,4395.0,4240.0,4285.0,683900],["2026-06-19",4300.0,4405.0,4180.0,4305.0,3110400],["2026-06-22",4325.0,4620.0,4260.0,4540.0,1015500],["2026-06-23",4545.0,4720.0,4385.0,4395.0,1466900],["2026-06-24",4325.0,4570.0,4285.0,4350.0,807100],["2026-06-25",4510.0,4635.0,4380.0,4455.0,634100],["2026-06-26",4365.0,4425.0,4090.0,4165.0,856500],["2026-06-29",4235.0,4325.0,4155.0,4315.0,862100],["2026-06-30",4385.0,4435.0,4235.0,4330.0,682200],["2026-07-01",4370.0,4810.0,4300.0,4745.0,1671200],["2026-07-02",4465.0,4755.0,4315.0,4655.0,1558800],["2026-07-03",4300.0,4800.0,4290.0,4775.0,1467100],["2026-07-06",4845.0,4920.0,4490.0,4550.0,1367900],["2026-07-07",4450.0,4620.0,4395.0,4470.0,959300],["2026-07-08",4380.0,4465.0,4190.0,4240.0,1229200],["2026-07-09",4350.0,4380.0,4225.0,4300.0,711300],["2026-07-10",4385.0,4445.0,4270.0,4325.0,762100],["2026-07-13",4310.0,4395.0,4130.0,4170.0,807900],["2026-07-14",4100.0,4160.0,4025.0,4100.0,543200],["2026-07-15",4125.0,4220.0,4030.0,4160.0,715000],["2026-07-16",4050.0,4070.0,3835.0,3900.0,1009800],["2026-07-17",3700.0,3710.0,3470.0,3555.0,1578800],["2026-07-21",3675.0,3715.0,3560.0,3650.0,1172700],["2026-07-22",3850.0,3920.0,3725.0,3760.0,1135300],["2026-07-23",4015.0,4395.0,4010.0,4285.0,2778700],["2026-07-24",4215.0,4250.0,4040.0,4105.0,914800],["2026-07-27",4120.0,4380.0,4090.0,4290.0,1119100],["2026-07-28",4090.0,4115.0,3740.0,3785.0,1627700],["2026-07-29",3770.0,3800.0,3395.0,3545.0,1751700],["2026-07-30",3615.0,3720.0,3560.0,3635.0,925600],["2026-07-31",3905.0,4030.0,3740.0,3935.0,1451100],["2026-08-03",3865.0,4070.0,3840.0,4010.0,890500],["2026-08-04",4055.0,4120.0,4000.0,4055.0,602400],["2026-08-05",4210.0,4380.0,4155.0,4315.0,956300],["2026-08-06",4350.0,4420.0,4240.0,4295.0,1295300],["2026-08-07",3735.0,3735.0,3595.0,3670.0,3543900],["2026-08-10",3735.0,3835.0,3600.0,3765.0,1528700],["2026-08-12",3810.0,3910.0,3765.0,3870.0,1051500],["2026-08-13",3920.0,3970.0,3850.0,3850.0,728300],["2026-08-14",3990.0,4030.0,3800.0,3840.0,741700],["2026-08-17",3895.0,3930.0,3855.0,3895.0,399500],["2026-08-18",4000.0,4025.0,3815.0,3845.0,595600],["2026-08-19",3705.0,3715.0,3565.0,3570.0,1030900],["2026-08-20",3595.0,3675.0,3530.0,3605.0,655200],["2026-08-21",3550.0,3630.0,3490.0,3630.0,699300],["2026-08-24",3665.0,3775.0,3650.0,3710.0,743900],["2026-08-25",3645.0,3740.0,3575.0,3740.0,617700],["2026-08-26",3670.0,3690.0,3615.0,3645.0,551400],["2026-08-27",3750.0,3835.0,3720.0,3745.0,806100],["2026-08-28",3750.0,3835.0,3725.0,3740.0,533100],["2026-08-31",3685.0,3775.0,3645.0,3760.0,452200],["2026-09-01",3700.0,3740.0,3620.0,3725.0,668400],["2026-09-02",3600.0,3640.0,3550.0,3550.0,794100]];
+const DATANOTE = "";
+const bars = RAW.map(r=>({t:r[0],o:r[1],h:r[2],l:r[3],c:r[4],v:r[5]}));
+
+// 期間ごとに 足の種類 / 表示本数 / 単純移動平均 / ボリンジャーバンドの足と期間 を定義
+const PERIODS=[
+ {k:"1w", label:"1週間", n:5,   agg:"d", mas:[5,25,50],   bbAgg:"d", bb:25},
+ {k:"3m", label:"3ヶ月", n:63,  agg:"d", mas:[5,25,50],   bbAgg:"d", bb:25},
+ {k:"1y", label:"1年",   n:52,  agg:"w", mas:[13,26,52],  bbAgg:"w", bb:26},
+ {k:"5y", label:"5年",   n:60,  agg:"m", mas:[9,24,60],   bbAgg:"w", bb:26},
+ {k:"10y",label:"10年",  n:120, agg:"m", mas:[18,48,120], bbAgg:"w", bb:26},
+];
+const UNIT={d:"日",w:"週",m:"月"};
+const MACOL=["#E8A33D","#3A7CA5","#8E5BA6"];
+let cur="3m";
+
+function aggregate(bs, mode){
+  if(mode==="d") return bs;
+  const out=[]; let cu=null, key=null;
+  for(const b of bs){
+    let k;
+    if(mode==="m"){ k=b.t.slice(0,7); }
+    else { const dt=new Date(b.t+"T00:00:00");
+           const mo=new Date(dt); mo.setDate(dt.getDate()-((dt.getDay()+6)%7));
+           k=mo.toISOString().slice(0,10); }
+    if(k!==key){ if(cu)out.push(cu); key=k; cu={t:b.t,o:b.o,h:b.h,l:b.l,c:b.c,v:b.v}; }
+    else { cu.h=Math.max(cu.h,b.h); cu.l=Math.min(cu.l,b.l); cu.c=b.c; cu.v+=b.v; cu.t=b.t; }
+  }
+  if(cu)out.push(cu); return out;
+}
+const AGG={d:aggregate(bars,"d"), w:aggregate(bars,"w"), m:aggregate(bars,"m")};
+
+function sma(cl,w){const n=cl.length,o=Array(n).fill(null);let s=0;
+  for(let i=0;i<n;i++){s+=cl[i]; if(i>=w)s-=cl[i-w]; if(i>=w-1)o[i]=s/w;} return o;}
+
+function withMA(bs, mas){
+  const cl=bs.map(b=>b.c), M=mas.map(w=>sma(cl,w));
+  return bs.map((b,i)=>({...b,m0:M[0][i],m1:M[1][i],m2:M[2][i]}));
+}
+function bollinger(bs, W){   // {t,mid,u1..u3,l1..l3} の配列
+  const cl=bs.map(b=>b.c), n=cl.length, out=[]; let s=0,s2=0;
+  for(let i=0;i<n;i++){ s+=cl[i]; s2+=cl[i]*cl[i];
+    if(i>=W){s-=cl[i-W];s2-=cl[i-W]*cl[i-W];}
+    if(i>=W-1){const m=s/W,sd=Math.sqrt(Math.max(0,s2/W-m*m));
+      out.push({t:bs[i].t,mid:m,u1:m+sd,l1:m-sd,u2:m+2*sd,l2:m-2*sd,u3:m+3*sd,l3:m-3*sd});}}
+  return out;
+}
+const RSICOL="#1F7A8C";
+function rsiSeries(bs, W){   // Wilder方式の14日RSI
+  const out=[]; let ag=0, al=0;
+  for(let i=1;i<bs.length;i++){
+    const d=bs[i].c-bs[i-1].c, g=Math.max(0,d), l=Math.max(0,-d);
+    if(i<=W){ ag+=g/W; al+=l/W; if(i===W) out.push({t:bs[i].t, rsi:al===0?100:100-100/(1+ag/al)}); }
+    else { ag=(ag*(W-1)+g)/W; al=(al*(W-1)+l)/W;
+           out.push({t:bs[i].t, rsi:al===0?100:100-100/(1+ag/al)}); }}
+  return out;
+}
+const RSIS = {d:rsiSeries(AGG.d,14), w:rsiSeries(AGG.w,14), m:rsiSeries(AGG.m,14)};
+const RCICOL={s:"#C0567E", l:"#4E5D94"};
+function rciSeries(bs, W){   // 日付順位と価格順位のスピアマン順位相関
+  const out=[], den=W*W*W-W;
+  for(let i=W-1;i<bs.length;i++){
+    const win=[]; for(let j=0;j<W;j++) win.push({tr:j+1, c:bs[i-j].c}); // tr=1が直近
+    const sorted=[...win].sort((a,b)=>b.c-a.c);
+    sorted.forEach((o,k)=>o.pr=k+1);                                    // pr=1が最高値
+    let sd=0; for(const o of win){const d=o.tr-o.pr; sd+=d*d;}
+    out.push({t:bs[i].t, rci:(1-6*sd/den)*100});}
+  return out;
+}
+const RCIS={}; for(const k of ["d","w","m"])
+  RCIS[k]={s:rciSeries(AGG[k],9), l:rciSeries(AGG[k],26)};
+const NOBB={mid:null,u1:null,l1:null,u2:null,l2:null,u3:null,l3:null};
+function attachBB(rows, bb){ // 各バーに「その日付以前で最新のBB」を割り当てる
+  let j=-1; return rows.map(r=>{
+    while(j+1<bb.length && bb[j+1].t<=r.t) j++;
+    const s=(j>=0 && bb[j].t<=r.t)?bb[j]:NOBB;
+    return {...r, mid:s.mid,u1:s.u1,l1:s.l1,u2:s.u2,l2:s.l2,u3:s.u3,l3:s.l3};});
+}
+function attachRSI(rows, ser){
+  let j=-1; return rows.map(r=>{
+    while(j+1<ser.length && ser[j+1].t<=r.t) j++;
+    return {...r, rsi:(j>=0 && ser[j].t<=r.t)?ser[j].rsi:null};});
+}
+function attachRCI(rows, ss, ls){
+  let a=-1,b=-1; return rows.map(r=>{
+    while(a+1<ss.length && ss[a+1].t<=r.t) a++;
+    while(b+1<ls.length && ls[b+1].t<=r.t) b++;
+    return {...r, rciS:(a>=0&&ss[a].t<=r.t)?ss[a].rci:null,
+                  rciL:(b>=0&&ls[b].t<=r.t)?ls[b].rci:null};});
+}
+
+const fmt=v=>v==null?"—":v.toLocaleString("ja-JP",{minimumFractionDigits:1,maximumFractionDigits:1});
+const fmtV=v=>v>=1e8?(v/1e8).toFixed(2)+"億":v>=1e4?(v/1e4).toFixed(1)+"万":String(v);
+const cv=document.getElementById("cv"), ctx=cv.getContext("2d"), tip=document.getElementById("tip");
+let view=[], geo=null, P=null;
+
+function line(vals,X,Y,n,color,w){
+  let pts=0, started=false; ctx.beginPath();
+  for(let i=0;i<n;i++){const v=vals[i]; if(v==null)continue; pts++;
+    started?ctx.lineTo(X(i),Y(v)):(ctx.moveTo(X(i),Y(v)),started=true);}
+  ctx.strokeStyle=color; ctx.lineWidth=w; ctx.stroke();
+  if(pts===1){for(let i=0;i<n;i++){const v=vals[i]; if(v==null)continue;
+    ctx.beginPath();ctx.arc(X(i),Y(v),2.6,0,7);ctx.fillStyle=color;ctx.fill();}}
+}
+
+function draw(){
+  P=PERIODS.find(x=>x.k===cur);
+  const unit=UNIT[P.agg], bu=UNIT[P.bbAgg];
+  const full=attachRCI(
+      attachRSI(attachBB(withMA(AGG[P.agg],P.mas), bollinger(AGG[P.bbAgg],P.bb)), RSIS[P.agg]),
+      RCIS[P.agg].s, RCIS[P.agg].l);
+  view=full.slice(Math.max(0,full.length-P.n));
+  const showVol=document.getElementById("tVol").checked,
+        showBB=document.getElementById("tBB").checked,
+        showMA=document.getElementById("tMA").checked,
+        showRSI=document.getElementById("tRSI").checked,
+        showRCI=document.getElementById("tRCI").checked;
+
+  const W=cv.clientWidth, narrow=W<640;
+  const base=narrow?Math.round(W*1.05):Math.round(W*0.52);
+  const H=Math.max(narrow?380:440, Math.min(narrow?760:880,
+          base+(showRSI?(narrow?70:88):0)+(showRCI?(narrow?70:88):0)));
+  const dpr=window.devicePixelRatio||1;
+  cv.width=W*dpr; cv.height=H*dpr; cv.style.height=H+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+  const cs=getComputedStyle(document.body), fg=cs.getPropertyValue("--fg").trim(),
+        mut=cs.getPropertyValue("--mut").trim(), gl=cs.getPropertyValue("--line").trim();
+  const L=8,R=66,T=10,B=26,g=12;
+  const volH=showVol?Math.round(H*0.15):0, rsiH=showRSI?Math.round(H*0.16):0,
+        rciH=showRCI?Math.round(H*0.16):0;
+  const pT=T, pB=H-B-(volH?volH+g:0)-(rsiH?rsiH+g:0)-(rciH?rciH+g:0),
+        plotW=W-L-R, plotH=pB-pT, n=view.length;
+
+  let lo=Infinity,hi=-Infinity;
+  for(const b of view){ lo=Math.min(lo,b.l); hi=Math.max(hi,b.h);
+    if(n>2&&showBB&&b.l2!=null){lo=Math.min(lo,b.l2);hi=Math.max(hi,b.u2);}
+    if(n>2&&showMA)for(const k of["m0","m1","m2"])if(b[k]!=null){lo=Math.min(lo,b[k]);hi=Math.max(hi,b[k]);}}
+  if(n>2&&showBB){ // ±3σは広がりすぎることがあるので、延長は基準レンジの30%まで
+    const ext=(hi-lo)*0.3; let l3=Infinity,u3=-Infinity;
+    for(const b of view){if(b.l3!=null){l3=Math.min(l3,b.l3);u3=Math.max(u3,b.u3);}}
+    if(isFinite(l3)){lo=Math.min(lo,Math.max(l3,lo-ext)); hi=Math.max(hi,Math.min(u3,hi+ext));}}
+  const pad=(hi-lo)*0.08||hi*0.02||1; lo=Math.max(0,lo-pad); hi+=pad;
+  const cw=plotW/n, X=i=>L+cw*(i+0.5), Y=v=>pB-(v-lo)/(hi-lo)*plotH;
+  geo={L,cw,n,H};
+
+  ctx.font='11px system-ui,sans-serif'; ctx.textBaseline="middle";
+  const rawSt=(hi-lo)/6, mag=Math.pow(10,Math.floor(Math.log10(rawSt)));
+  const st=[1,2,2.5,5,10].map(m=>m*mag).find(v=>v>=rawSt)||mag*10;
+  for(let v=Math.ceil(lo/st)*st; v<hi; v+=st){
+    const y=Y(v); ctx.strokeStyle=gl; ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(L+plotW,y);ctx.stroke();
+    ctx.fillStyle=mut; ctx.textAlign="left";
+    ctx.fillText(Math.round(v).toLocaleString("ja-JP"), L+plotW+8, y);}
+
+  ctx.save(); ctx.beginPath(); ctx.rect(L,pT-2,plotW,plotH+4); ctx.clip();
+  if(showBB){
+    const band=(a,b,al)=>{ctx.beginPath();let s=true;
+      for(let i=0;i<n;i++){const v=view[i][a];if(v==null)continue;
+        s?(ctx.moveTo(X(i),Y(v)),s=false):ctx.lineTo(X(i),Y(v));}
+      for(let i=n-1;i>=0;i--){const v=view[i][b];if(v==null)continue;ctx.lineTo(X(i),Y(v));}
+      ctx.closePath();ctx.fillStyle="rgba(74,111,165,"+al+")";ctx.fill();};
+    band("u3","l3",0.06); band("u2","l2",0.10); band("u1","l1",0.16);
+    ctx.setLineDash([2,3]);
+    for(const k of ["u3","l3"]) line(view.map(b=>b[k]),X,Y,n,"rgba(74,111,165,.5)",1);
+    ctx.setLineDash([4,3]);
+    for(const k of ["u2","l2"]) line(view.map(b=>b[k]),X,Y,n,"rgba(74,111,165,.7)",1);
+    ctx.setLineDash([]);
+    for(const k of ["u1","l1"]) line(view.map(b=>b[k]),X,Y,n,"rgba(74,111,165,.4)",.9);
+    line(view.map(b=>b.mid),X,Y,n,"rgba(74,111,165,.9)",1.2);
+  }
+  const bw=Math.max(1.5,Math.min(cw*0.66,n<=10?44:26));
+  for(let i=0;i<n;i++){const b=view[i], up=b.c>=b.o, col=up?"#D14343":"#2E7D6B";
+    ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=Math.min(1.4,Math.max(.8,cw*0.12));
+    ctx.beginPath();ctx.moveTo(X(i),Y(b.h));ctx.lineTo(X(i),Y(b.l));ctx.stroke();
+    const y1=Y(Math.max(b.o,b.c)),y2=Y(Math.min(b.o,b.c));
+    ctx.fillRect(X(i)-bw/2,y1,bw,Math.max(1,y2-y1));}
+  if(n<=2){ctx.font='12px system-ui,sans-serif';ctx.textAlign="left";
+    for(let i=0;i<n;i++){const b=view[i];
+      for(const [k,v] of [["始",b.o],["高",b.h],["安",b.l],["終",b.c]]){
+        ctx.strokeStyle=gl;ctx.setLineDash([2,3]);ctx.beginPath();
+        ctx.moveTo(X(i)+bw/2+3,Y(v));ctx.lineTo(X(i)+bw/2+12,Y(v));ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=mut;ctx.fillText(k,X(i)+bw/2+18,Y(v));
+        ctx.fillStyle=fg;ctx.fillText(fmt(v),X(i)+bw/2+36,Y(v));}}}
+  if(showMA) ["m0","m1","m2"].forEach((k,j)=>line(view.map(b=>b[k]),X,Y,n,MACOL[j],1.4));
+  ctx.restore();
+
+  let paneY=pB;
+  if(showVol){
+    const vT=paneY+g, vB=vT+volH, vh=vB-vT, vmax=Math.max(...view.map(b=>b.v))||1; paneY=vB;
+    ctx.strokeStyle=gl;ctx.beginPath();ctx.moveTo(L,vB);ctx.lineTo(L+plotW,vB);ctx.stroke();
+    for(let i=0;i<n;i++){const b=view[i];
+      ctx.fillStyle=(b.c>=b.o?"rgba(209,67,67,.5)":"rgba(46,125,107,.5)");
+      const h=Math.max(1,b.v/vmax*vh*0.92); ctx.fillRect(X(i)-bw/2,vB-h,bw,h);}
+    ctx.font='11px system-ui,sans-serif';ctx.fillStyle=mut;ctx.textAlign="left";
+    ctx.fillText(fmtV(vmax),L+plotW+8,vT+6);}
+
+  if(showRSI){
+    const rT=paneY+g, rB=rT+rsiH, RY=v=>rB-v/100*rsiH; paneY=rB;
+    ctx.fillStyle="rgba(31,122,140,.07)";
+    ctx.fillRect(L,RY(70),plotW,RY(30)-RY(70));           // 30〜70の中立ゾーン
+    ctx.font='10px system-ui,sans-serif';ctx.textBaseline="middle";
+    for(const lv of [70,50,30]){
+      const y=RY(lv); ctx.strokeStyle=gl; ctx.lineWidth=1;
+      ctx.setLineDash(lv===50?[1,4]:[3,3]); ctx.beginPath();
+      ctx.moveTo(L,y);ctx.lineTo(L+plotW,y);ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle=mut;ctx.textAlign="left";ctx.fillText(lv,L+plotW+8,y);}
+    ctx.save();ctx.beginPath();ctx.rect(L,rT-1,plotW,rsiH+2);ctx.clip();
+    line(view.map(b=>b.rsi),X,RY,n,RSICOL,1.4);
+    const lr=view[n-1].rsi;
+    if(lr!=null){ctx.beginPath();ctx.arc(X(n-1),RY(lr),2.6,0,7);ctx.fillStyle=RSICOL;ctx.fill();}
+    ctx.restore();
+    ctx.fillStyle=RSICOL;ctx.textAlign="left";ctx.font='11px system-ui,sans-serif';
+    ctx.fillText("RSI(14"+unit+") "+(view[n-1].rsi==null?"—":view[n-1].rsi.toFixed(1)),L+4,rT+8);}
+
+  if(showRCI){
+    const cT=paneY+g, cB=cT+rciH, CY=v=>cB-(v+100)/200*rciH; paneY=cB;
+    ctx.fillStyle="rgba(120,120,140,.05)";ctx.fillRect(L,CY(80),plotW,CY(-80)-CY(80));
+    ctx.font='10px system-ui,sans-serif';ctx.textBaseline="middle";
+    for(const lv of [80,0,-80]){
+      const y=CY(lv); ctx.strokeStyle=gl; ctx.lineWidth=1;
+      ctx.setLineDash(lv===0?[1,4]:[3,3]); ctx.beginPath();
+      ctx.moveTo(L,y);ctx.lineTo(L+plotW,y);ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle=mut;ctx.textAlign="left";ctx.fillText(lv>0?"+"+lv:lv,L+plotW+8,y);}
+    ctx.save();ctx.beginPath();ctx.rect(L,cT-1,plotW,rciH+2);ctx.clip();
+    line(view.map(b=>b.rciL),X,CY,n,RCICOL.l,1.3);
+    line(view.map(b=>b.rciS),X,CY,n,RCICOL.s,1.3);
+    for(const [k,c] of [["rciL",RCICOL.l],["rciS",RCICOL.s]]){const v=view[n-1][k];
+      if(v!=null){ctx.beginPath();ctx.arc(X(n-1),CY(v),2.6,0,7);ctx.fillStyle=c;ctx.fill();}}
+    ctx.restore();
+    ctx.font='11px system-ui,sans-serif';ctx.textAlign="left";
+    const f1=view[n-1].rciS, f2=view[n-1].rciL;
+    ctx.fillStyle=RCICOL.s;ctx.fillText("RCI(9) "+(f1==null?"—":f1.toFixed(1)),L+4,cT+8);
+    ctx.fillStyle=RCICOL.l;ctx.fillText("RCI(26) "+(f2==null?"—":f2.toFixed(1)),
+      narrow?L+4:L+96, narrow?cT+22:cT+8);}
+
+  ctx.font='11px system-ui,sans-serif';ctx.fillStyle=mut;ctx.textAlign="center";
+  const tk=Math.max(1,Math.round(n/(narrow?4:7)));
+  for(let i=n-1;i>=0;i-=tk){const d=view[i].t;
+    ctx.fillText(P.agg==="m"?d.slice(0,7):d.slice(2).replace(/-/g,"/"),X(i),H-B/2+2);}
+
+  const last=view[n-1], lb=bars[bars.length-1],
+        pv=bars.length>1?bars[bars.length-2].c:null;
+  document.getElementById("last").textContent=fmt(lb.c);
+  const ch=pv!=null?lb.c-pv:0;
+  const ce=document.getElementById("chg");
+  ce.textContent=(ch>=0?"+":"")+fmt(ch)+" ("+(ch>=0?"+":"")+(pv?ch/pv*100:0).toFixed(2)+"%)";
+  ce.className="chg "+(ch>=0?"up":"dn");
+  document.getElementById("asof").textContent=lb.t+" 時点 ／ "+unit+"足 "+n+"本表示";
+
+  const lg=[];
+  if(showMA)P.mas.forEach((w,j)=>lg.push([MACOL[j],w+unit+"移動平均",last["m"+j]]));
+  document.getElementById("legend").innerHTML=lg.map(([c,t,v])=>
+    '<span><i style="background:'+c+'"></i>'+t+" "+fmt(v)+"</span>").join("")
+    +(showBB?'<span><i style="background:#4A6FA5"></i>BB中心線('+P.bb+bu+') '+fmt(last.mid)+"</span>"
+      +[[1,last.u1,last.l1],[2,last.u2,last.l2],[3,last.u3,last.l3]].map(([k,u,l])=>
+        "<span class='sg'>±"+k+"σ "+fmt(u)+" / "+fmt(l)+"</span>").join(""):"")
+    +(showRSI?'<span><i style="background:'+RSICOL+'"></i>RSI(14'+unit+') '
+      +(last.rsi==null?"—":last.rsi.toFixed(1))+"</span>":"")
+    +(showRCI?'<span><i style="background:'+RCICOL.s+'"></i>RCI(9'+unit+') '
+      +(last.rciS==null?"—":last.rciS.toFixed(1))+"</span>"
+      +'<span><i style="background:'+RCICOL.l+'"></i>RCI(26'+unit+') '
+      +(last.rciL==null?"—":last.rciL.toFixed(1))+"</span>":"");
+
+  const totMA=AGG[P.agg].length, totBB=AGG[P.bbAgg].length;
+  const lack=P.mas.filter(w=>Math.max(0,totMA-w+1)<12);
+  const bbNote="BB"+P.bb+bu+" ±1〜3σ"+(P.bbAgg!==P.agg?"（週足で計算し"+unit+"足に重ねて表示）":"");
+  const rsiNote=" RSI(14"+unit+"、Wilder方式)とRCI(9"+unit+"・26"+unit
+    +"、順位相関)も表示中の"+unit+"足ベースで計算しています。";
+  document.getElementById("note").textContent=
+    "元データは日足です。"+
+    (P.agg==="d"?"日足のまま表示し、指標は全期間の日足（移動平均 "+P.mas.join("・")+"日、"+bbNote+"）で計算しています。"
+     :(unit+"足に集約し、移動平均は"+unit+"足ベース（"+P.mas.join(unit+"・")+unit+"）、"+bbNote+"。"))+
+    (lack.length?" ※保有データは"+totMA+unit+"ぶんのため、"+lack.join("・")+unit
+      +"線は右端の"+lack.map(w=>Math.max(0,totMA-w+1)).join("・")+"点しか描けません"
+      +"（フルに引くにはより長期のデータ取得が必要）。":"")+rsiNote+DATANOTE;
+}
+
+const pe=document.getElementById("periods");
+pe.innerHTML=PERIODS.map(p=>'<button data-k="'+p.k+'"'+(p.k===cur?' class="on"':'')+'>'+p.label+'</button>').join("");
+pe.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  cur=b.dataset.k;[...pe.children].forEach(x=>x.classList.toggle("on",x===b));draw();});
+for(const id of ["tBB","tMA","tVol","tRSI","tRCI"])document.getElementById(id).addEventListener("change",draw);
+
+function showTip(cx,cy){
+  if(!geo)return; const r=cv.getBoundingClientRect(), x=cx-r.left;
+  const i=Math.max(0,Math.min(geo.n-1,Math.floor((x-geo.L)/geo.cw)));
+  const b=view[i]; if(!b){tip.style.display="none";return;}
+  const u=UNIT[P.agg], bu=UNIT[P.bbAgg];
+  tip.innerHTML='<div class="d">'+b.t+(P.agg==="d"?"":"（"+u+"足）")+'</div>'+
+    '<span>始</span> '+fmt(b.o)+' <span>高</span> '+fmt(b.h)+'<br>'+
+    '<span>安</span> '+fmt(b.l)+' <span>終</span> '+fmt(b.c)+'<br>'+
+    '<span>出来高</span> '+fmtV(b.v)+'<br>'+
+    '<span>SMA '+P.mas.join("/")+u+'</span> '+fmt(b.m0)+' / '+fmt(b.m1)+' / '+fmt(b.m2)+'<br>'+
+    '<span>BB('+P.bb+bu+') 中心</span> '+fmt(b.mid)+'<br>'+
+    '<span>±1σ</span> '+fmt(b.u1)+' / '+fmt(b.l1)+'<br>'+
+    '<span>±2σ</span> '+fmt(b.u2)+' / '+fmt(b.l2)+'<br>'+
+    '<span>±3σ</span> '+fmt(b.u3)+' / '+fmt(b.l3)+'<br>'+
+    '<span>RSI(14'+u+')</span> '+(b.rsi==null?"—":b.rsi.toFixed(1))+'<br>'+
+    '<span>RCI(9/26'+u+')</span> '+(b.rciS==null?"—":b.rciS.toFixed(1))
+      +' / '+(b.rciL==null?"—":b.rciL.toFixed(1));
+  tip.style.display="block";
+  const tw=tip.offsetWidth, px=geo.L+geo.cw*(i+0.5);
+  tip.style.left=Math.max(0,Math.min(cv.clientWidth-tw,
+    px+tw+16<cv.clientWidth?px+14:px-tw-14))+"px";
+  tip.style.top=Math.max(0,Math.min(geo.H-tip.offsetHeight,cy-r.top-10))+"px";
+}
+cv.addEventListener("mousemove",e=>showTip(e.clientX,e.clientY));
+cv.addEventListener("mouseleave",()=>tip.style.display="none");
+cv.addEventListener("touchstart",e=>{const t=e.touches[0];showTip(t.clientX,t.clientY);},{passive:true});
+cv.addEventListener("touchmove",e=>{const t=e.touches[0];showTip(t.clientX,t.clientY);},{passive:true});
+cv.addEventListener("touchend",()=>setTimeout(()=>tip.style.display="none",2500),{passive:true});
+try{ draw(); }
+catch(err){
+  document.getElementById("note").textContent="チャートの描画に失敗しました: "+err.message
+    +"（ブラウザのバージョンが古い可能性があります。Chrome や最新の Safari でお試しください）";
+  console.error(err);
+}
+try{ addEventListener("resize",draw); }catch(e){}
+try{ matchMedia("(prefers-color-scheme:dark)").addEventListener("change",draw); }
+catch(e){ try{ matchMedia("(prefers-color-scheme:dark)").addListener(draw); }catch(e2){} }
+/* 親ページの表示切替に追従する（埋め込み表示のとき） */
+try{ addEventListener("message",function(ev){
+  var t=ev&&ev.data&&ev.data.chartTheme;
+  if(t==="dark"||t==="light"){ document.documentElement.setAttribute("data-theme",t); draw(); }
+  else if(t==="auto"){ document.documentElement.removeAttribute("data-theme"); draw(); }
+}); }catch(e){}
+</script></body></html>
