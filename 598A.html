@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<script>
+/* 親ページから ?theme=dark|light で表示を指定できる。指定が無ければOSの設定に従う。 */
+(function(){try{
+  var m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash);
+  if(m)document.documentElement.setAttribute("data-theme",m[1]);
+}catch(e){}})();
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>598A チャットプラス チャート</title>
+<link rel="stylesheet" href="assets/chart.css?v=a08d4ea5"><!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--><!--pc-wide:v1--><style id="pc-wide">@media (min-width:1280px){body>.wrap,body>main,body>div.wrap{max-width:1680px!important}}</style><!--/pc-wide--><!--site-icon:v3--><link rel="icon" type="image/svg+xml" href="/kabu-charts/icon-black.svg?v=3" media="(prefers-color-scheme: light)"><link rel="icon" type="image/svg+xml" href="/kabu-charts/icon-white.svg?v=3" media="(prefers-color-scheme: dark)"><link rel="apple-touch-icon" href="/kabu-charts/apple-touch-icon.png?v=3"><!--/site-icon--></head><body><!--kb-btn--><button class="kb-theme kb-corner" id="kbTheme" type="button" data-kb="msg" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn--><div class="wrap">
+<h1><a class="back" href="./charts.html" title="一覧へ">‹</a>598A チャットプラス<span class="mk">グロース</span><span class="mk sec">情報・通信業</span><button id="star" class="star-btn" aria-label="お気に入り">★</button></h1>
+<div class="price"><b id="last"></b><span class="chg" id="chg"></span><span class="asof" id="asof"></span><a class="dash" href="./one/598A.html" target="_top" title="シグナル・チャート・ファンダを1画面で">ダッシュボード ›</a></div>
+<section class="biz" aria-label="会社概要"><p>企業の問い合わせ対応を自動化するSaaS型チャットボットを主力に、生成AI連携製品も展開する。</p><a href="https://chatplus.jp" target="_blank" rel="noopener noreferrer"><b>公式サイト ↗</b><span>chatplus.jp</span></a></section><div class="st" id="state"></div>
+<div class="bar">
+  <div class="seg" id="periods"></div>
+  <div class="ipick">
+    <button class="ib" data-g="tr" type="button">トレンド系<span class="cnt" id="cTR"></span><small>チャート上</small></button>
+    <button class="ib" data-g="os" type="button">オシレーター系<span class="cnt" id="cOS"></span><small>チャート下</small></button>
+    <button class="ib" data-g="sg" type="button"><span class="sgi"><b class="bu">▲</b><b class="se">▼</b></span>売買サイン<span class="cnt" id="cSG"></span></button>
+  </div>
+</div>
+<div class="ipanel" id="ipanel" hidden>
+  <div class="iph"><b id="iptitle"></b><span id="ipdesc"></span>
+    <button type="button" id="ipreset">既定に戻す</button><button type="button" id="ipnone">すべて外す</button><button type="button" id="ipclose">閉じる</button></div>
+  <div class="sgst" id="sgst" hidden>表示のしかた
+    <div class="seg" id="sgstyle"><button type="button" data-st="label">ラベル（買・売）</button><button type="button" data-st="tri">大きい三角</button></div>
+    <label><input type="checkbox" id="sgvl">サインの足に縦線も引く</label></div>
+  <div class="ics" id="ipchips"></div>
+</div>
+<div class="legend" id="legend"></div>
+<div class="chart"><canvas id="cv"></canvas><div class="vmode" id="vmode"><button type="button" data-m="v">出来高</button><button type="button" data-m="a">売買代金</button></div><div class="xh" id="xhv"></div><div class="xh" id="xhh"></div><div id="tip"></div></div>
+<details class="nt" id="ntbox"><summary>指標の計算方法</summary><p class="note" id="note"></p></details>
+</div>
+<script>
+const CODE = "598A";
+const RAW = [["2026-07-16",2284.0,2784.0,2284.0,2784.0,772200],["2026-07-17",2700.0,2784.0,2284.0,2284.0,650900],["2026-07-21",2034.0,2784.0,2034.0,2784.0,3538600],["2026-07-22",2284.0,2285.0,2284.0,2284.0,306000],["2026-07-23",2184.0,2297.0,2035.0,2050.0,1931600],["2026-07-24",1953.0,2087.0,1809.0,1813.0,541800],["2026-07-27",1800.0,1813.0,1651.0,1661.0,292300],["2026-07-28",1672.0,1853.0,1589.0,1589.0,907300],["2026-07-29",1559.0,1588.0,1448.0,1483.0,217600],["2026-07-30",1500.0,1560.0,1460.0,1493.0,147700],["2026-07-31",1542.0,1590.0,1525.0,1561.0,143200],["2026-08-03",1529.0,1561.0,1483.0,1553.0,73800],["2026-08-04",1546.0,1602.0,1523.0,1599.0,75900],["2026-08-05",1612.0,1615.0,1559.0,1608.0,81400],["2026-08-06",1605.0,1609.0,1538.0,1538.0,67400],["2026-08-07",1540.0,1563.0,1500.0,1539.0,56300],["2026-08-10",1570.0,1644.0,1532.0,1577.0,118800],["2026-08-12",1581.0,1672.0,1581.0,1663.0,92200],["2026-08-13",1670.0,1801.0,1629.0,1715.0,242100],["2026-08-14",1501.0,1546.0,1499.0,1535.0,309400],["2026-08-17",1540.0,1540.0,1502.0,1506.0,104100],["2026-08-18",1502.0,1502.0,1399.0,1415.0,174500],["2026-08-19",1385.0,1385.0,1310.0,1323.0,146200],["2026-08-20",1325.0,1377.0,1282.0,1360.0,88400],["2026-08-21",1330.0,1345.0,1320.0,1340.0,43100],["2026-08-24",1340.0,1398.0,1322.0,1384.0,46300],["2026-08-25",1385.0,1393.0,1348.0,1393.0,26900],["2026-08-26",1430.0,1502.0,1424.0,1441.0,177600],["2026-08-27",1463.0,1490.0,1430.0,1469.0,91800],["2026-08-28",1486.0,1655.0,1469.0,1627.0,318900],["2026-08-31",1684.0,1858.0,1602.0,1627.0,491200],["2026-09-01",1657.0,1680.0,1551.0,1555.0,166100],["2026-09-02",1515.0,1547.0,1480.0,1507.0,79300],["2026-09-03",1510.0,1577.0,1490.0,1544.0,99600],["2026-09-04",1532.0,1944.0,1506.0,1820.0,1442100],["2026-09-07",1900.0,1903.0,1652.0,1688.0,771900],["2026-09-08",1655.0,1758.0,1623.0,1638.0,294200],["2026-09-09",1606.0,1631.0,1560.0,1579.0,111800],["2026-09-10",1578.0,1578.0,1479.0,1500.0,122800],["2026-09-11",1466.0,1467.0,1416.0,1418.0,91800],["2026-09-14",1400.0,1444.0,1375.0,1426.0,65300],["2026-09-15",1442.0,1471.0,1425.0,1446.0,48400],["2026-09-16",1450.0,1471.0,1420.0,1439.0,48000],["2026-09-17",1430.0,1440.0,1410.0,1424.0,47700],["2026-09-18",1416.0,1463.0,1415.0,1430.0,36700],["2026-09-24",1432.0,1463.0,1432.0,1442.0,34700],["2026-09-25",1445.0,1445.0,1406.0,1415.0,34000],["2026-09-28",1410.0,1430.0,1395.0,1402.0,29600],["2026-09-29",1391.0,1403.0,1362.0,1386.0,33600],["2026-09-30",1380.0,1434.0,1380.0,1422.0,39700],["2026-10-01",1414.0,1424.0,1393.0,1393.0,23300],["2026-10-02",1381.0,1390.0,1370.0,1381.0,18900],["2026-10-05",1384.0,1404.0,1383.0,1385.0,24800],["2026-10-06",1405.0,1416.0,1390.0,1405.0,17700],["2026-10-07",1400.0,1407.0,1364.0,1395.0,30300],["2026-10-08",1388.0,1388.0,1366.0,1367.0,18200],["2026-10-09",1360.0,1385.0,1344.0,1350.0,52500],["2026-10-13",1344.0,1347.0,1313.0,1320.0,39100],["2026-10-14",1316.0,1342.0,1280.0,1281.0,47200],["2026-10-15",1263.0,1263.0,1195.0,1198.0,71400],["2026-10-16",1228.0,1243.0,1217.0,1242.0,26800],["2026-10-19",1218.0,1241.0,1203.0,1232.0,22500],["2026-10-20",1221.0,1228.0,1186.0,1186.0,25200],["2026-10-21",1183.0,1230.0,1183.0,1195.0,20200],["2026-10-22",1200.0,1239.0,1144.0,1151.0,34600],["2026-10-23",1121.0,1200.0,1100.0,1200.0,53900],["2026-10-26",1188.0,1188.0,1160.0,1171.0,11200],["2026-10-27",1185.0,1195.0,1162.0,1169.0,13900],["2026-10-28",1174.0,1205.0,1170.0,1177.0,13200],["2026-10-29",1177.0,1180.0,1140.0,1160.0,19600],["2026-10-30",1155.0,1178.0,1102.0,1116.0,32400],["2026-11-02",1100.0,1117.0,1086.0,1086.0,35300],["2026-11-04",1080.0,1098.0,1000.0,1045.0,59700],["2026-11-05",1065.0,1082.0,1030.0,1035.0,20500],["2026-11-06",949.0,970.0,935.0,950.0,57500],["2026-11-09",959.0,1026.0,959.0,994.0,29100],["2026-11-10",1009.0,1075.0,1009.0,1075.0,44000],["2026-11-11",1064.0,1100.0,1050.0,1080.0,19300],["2026-11-12",1075.0,1094.0,1049.0,1057.0,17900],["2026-11-13",1045.0,1047.0,976.0,981.0,51100]];
+const DATANOTE = "";
+</script>
+<script src="intra/598A.js?v=20261113529"></script>
+<script src="assets/chart.js?v=febfe1bd"></script><!--kb-theme-js--><script>(function(){var bs=document.querySelectorAll('button.kb-theme[data-kb]');
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){var b=this,d=document.documentElement,
+cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=cur==='dark'?'light':'dark';
+d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}
+var f=document.querySelectorAll('iframe');for(var j=0;j<f.length;j++){try{f[j].contentWindow.postMessage({chartTheme:n},'*')}catch(e){}}
+var k=b.getAttribute('data-kb');
+if(k==='reload')location.reload();
+else if(k==='msg')window.postMessage({chartTheme:n},'*');
+else if(k==='fn'&&typeof window.__kbRedraw==='function')window.__kbRedraw();});})();</script><!--/kb-theme-js--><!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body></html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><!--kb-theme:v3--><script>(function(){var d=document.documentElement,
+m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash),t=m&&m[1];
+if(!t){try{t=localStorage.getItem('fdb-theme')}catch(e){}}
+if(t==='dark'||t==='light')d.setAttribute('data-theme',t);
+try{if(window.top!==window.self)d.classList.add('kb-embed')}catch(e){d.classList.add('kb-embed')}})();</script>
+<style id="kb-theme">
+:root{--kb-fg:#1f1f1e;--kb-line:#d6d5ce;--kb-hover:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}}
+:root[data-theme="dark"]{--kb-fg:#ecebe6;--kb-line:#3b3b38;--kb-hover:rgba(255,255,255,.08)}
+/* スイッチ本体（トラック） */
+:root{--kb-trk:#e8e7e1;--kb-knob:#fff;--kb-ico:#d08a00;--kb-dim:#a9a79f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}}
+:root[data-theme="dark"]{--kb-trk:#2b2b29;--kb-knob:#45453f;--kb-ico:#f3d36a;--kb-dim:#6f6e68}
+:root button.kb-theme.kb-theme{-webkit-appearance:none;appearance:none;position:relative;display:inline-block;box-sizing:border-box;
+width:54px;height:30px;min-width:54px;min-height:0;padding:0;border:1px solid var(--kb-line);border-radius:15px;background:var(--kb-trk);
+color:var(--kb-fg);font-size:0;line-height:0;cursor:pointer;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);vertical-align:middle;flex-shrink:0;
+overflow:hidden;-webkit-tap-highlight-color:transparent;transition:background .3s,border-color .3s}
+:root button.kb-theme.kb-theme:focus-visible{outline:2px solid #2a78d6;outline-offset:2px}
+:root button.kb-theme.kb-theme svg{display:block;width:100%;height:100%}
+/* 両端の小さなアイコン（つまみが無い側だけ見える） */
+:root button.kb-theme.kb-theme .kb-trk{position:absolute;top:50%;width:13px;height:13px;margin-top:-6.5px;color:var(--kb-dim);transition:opacity .3s}
+:root button.kb-theme.kb-theme .kb-l{left:7px;opacity:0}
+:root button.kb-theme.kb-theme .kb-r{right:7px;opacity:1}
+/* つまみ */
+:root button.kb-theme.kb-theme .kb-knob{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:var(--kb-knob);
+color:var(--kb-ico);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 .5px rgba(0,0,0,.06);transform:translateX(0);
+transition:transform .32s cubic-bezier(.3,1.35,.5,1),background .3s,color .3s}
+:root button.kb-theme.kb-theme:active .kb-knob{width:28px}
+:root button.kb-theme.kb-theme .kb-knob svg{position:absolute;inset:0;margin:auto;width:15px;height:15px;transition:opacity .25s,transform .35s}
+:root button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:1;transform:none}
+:root button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+/* ダーク表示中：つまみを右へ */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-l{opacity:1}
+:root:not([data-theme="light"]) button.kb-theme.kb-theme .kb-r{opacity:0}}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob{transform:translateX(24px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme:active .kb-knob{transform:translateX(20px)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-knob .kb-moon{opacity:1;transform:none}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-l{opacity:1}
+:root[data-theme="dark"] button.kb-theme.kb-theme .kb-r{opacity:0}
+@media (prefers-reduced-motion:reduce){:root button.kb-theme.kb-theme *{transition:none!important}}
+/* 全ページ共通の置き場所：ページ右上の角 */
+:root button.kb-theme.kb-theme.kb-corner{position:absolute;top:12px;right:16px;z-index:60;margin:0;float:none}
+@media (max-width:700px){:root button.kb-theme.kb-theme.kb-corner{top:10px;right:12px}}
+/* 右上のスイッチの下に見えない「よけ」を置き、見出しの文字やボタンがスイッチと重ならないようにする */
+.kb-spacer{float:right;width:84px;height:46px;pointer-events:none}
+@media (max-width:700px){.kb-spacer{width:76px;height:44px}}
+html.kb-embed .kb-spacer{display:none}
+html.kb-embed button.kb-theme[data-kb]{display:none}
+
+</style><!--/kb-theme-->
+<script>
+/* 親ページから ?theme=dark|light で表示を指定できる。指定が無ければOSの設定に従う。 */
+(function(){try{
+  var m=/[?&#]theme=(dark|light)/.exec(location.search+location.hash);
+  if(m)document.documentElement.setAttribute("data-theme",m[1]);
+}catch(e){}})();
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>523A セイワホールディングス チャート</title>
+<link rel="stylesheet" href="assets/chart.css?v=a08d4ea5"><!--mobile-fix:v1--><style id="mobile-fix">
+.mf-spacer{display:none}
+html.mf-sa .mf-spacer{display:block;height:calc(env(safe-area-inset-bottom,0px) + 110px)}
+html.mf-sa .detail .inner{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}
+</style><script>(function(){try{if(window.top!==window.self)return;
+var sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+var touch=matchMedia('(pointer: coarse)').matches;
+if(sa||touch)document.documentElement.classList.add('mf-sa');}catch(e){}})();</script><!--/mobile-fix--><!--pc-wide:v1--><style id="pc-wide">@media (min-width:1280px){body>.wrap,body>main,body>div.wrap{max-width:1680px!important}}</style><!--/pc-wide--><!--site-icon:v3--><link rel="icon" type="image/svg+xml" href="/kabu-charts/icon-black.svg?v=3" media="(prefers-color-scheme: light)"><link rel="icon" type="image/svg+xml" href="/kabu-charts/icon-white.svg?v=3" media="(prefers-color-scheme: dark)"><link rel="apple-touch-icon" href="/kabu-charts/apple-touch-icon.png?v=3"><!--/site-icon--></head><body><!--kb-btn--><button class="kb-theme kb-corner" id="kbTheme" type="button" data-kb="msg" aria-label="明暗を切り替え（ライト／ダーク）" title="明暗を切り替え（ライト／ダーク）"><span class="kb-trk kb-l"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg></span><span class="kb-trk kb-r"><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span><span class="kb-knob"><svg class="kb-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M5.1 18.9l1.6-1.6M17.3 6.7l1.6-1.6"/></svg><svg class="kb-moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a.6.6 0 0 0-.8-.7A9.2 9.2 0 1 0 20.9 15.4a.6.6 0 0 0-.7-.8z"/></svg></span></button><div class="kb-spacer" aria-hidden="true"></div><!--/kb-btn--><div class="wrap">
+<h1><a class="back" href="./charts.html" title="一覧へ">‹</a>523A セイワホールディングス<span class="mk">グロース</span><span class="mk sec">金属製品</span><button id="star" class="star-btn" aria-label="お気に入り">★</button></h1>
+<div class="price"><b id="last"></b><span class="chg" id="chg"></span><span class="asof" id="asof"></span><a class="dash" href="./one/523A.html" target="_top" title="シグナル・チャート・ファンダを1画面で">ダッシュボード ›</a></div>
+<section class="biz" aria-label="会社概要"><p>道路標識や検査レーン、鋼製ブラケットを製造するほか、亜鉛メッキ加工や鋼構造物の設計施工も手掛ける。</p><a href="https://seiwaholdings.co.jp" target="_blank" rel="noopener noreferrer"><b>公式サイト ↗</b><span>seiwaholdings.co.jp</span></a></section><div class="st" id="state"></div>
+<div class="bar">
+  <div class="seg" id="periods"></div>
+  <div class="ipick">
+    <button class="ib" data-g="tr" type="button">トレンド系<span class="cnt" id="cTR"></span><small>チャート上</small></button>
+    <button class="ib" data-g="os" type="button">オシレーター系<span class="cnt" id="cOS"></span><small>チャート下</small></button>
+    <button class="ib" data-g="sg" type="button"><span class="sgi"><b class="bu">▲</b><b class="se">▼</b></span>売買サイン<span class="cnt" id="cSG"></span></button>
+  </div>
+</div>
+<div class="ipanel" id="ipanel" hidden>
+  <div class="iph"><b id="iptitle"></b><span id="ipdesc"></span>
+    <button type="button" id="ipreset">既定に戻す</button><button type="button" id="ipnone">すべて外す</button><button type="button" id="ipclose">閉じる</button></div>
+  <div class="sgst" id="sgst" hidden>表示のしかた
+    <div class="seg" id="sgstyle"><button type="button" data-st="label">ラベル（買・売）</button><button type="button" data-st="tri">大きい三角</button></div>
+    <label><input type="checkbox" id="sgvl">サインの足に縦線も引く</label></div>
+  <div class="ics" id="ipchips"></div>
+</div>
+<div class="legend" id="legend"></div>
+<div class="chart"><canvas id="cv"></canvas><div class="vmode" id="vmode"><button type="button" data-m="v">出来高</button><button type="button" data-m="a">売買代金</button></div><div class="xh" id="xhv"></div><div class="xh" id="xhh"></div><div id="tip"></div></div>
+<details class="nt" id="ntbox"><summary>指標の計算方法</summary><p class="note" id="note"></p></details>
+</div>
+<script>
+const CODE = "523A";
+const RAW = [["2026-07-17",1580.0,1581.0,1357.0,1476.0,314700],["2026-07-21",1500.0,1550.0,1445.0,1526.0,135700],["2026-07-22",1556.0,1580.0,1479.0,1480.0,87800],["2026-07-23",1503.0,1555.0,1500.0,1511.0,74100],["2026-07-24",1535.0,1550.0,1512.0,1545.0,76500],["2026-07-27",1558.0,1588.0,1536.0,1551.0,60700],["2026-07-28",1545.0,1545.0,1426.0,1429.0,143400],["2026-07-29",1459.0,1460.0,1311.0,1344.0,180800],["2026-07-30",1350.0,1350.0,1315.0,1334.0,70400],["2026-07-31",1380.0,1449.0,1336.0,1419.0,70600],["2026-08-03",1402.0,1445.0,1374.0,1427.0,74900],["2026-08-04",1481.0,1697.0,1481.0,1675.0,258300],["2026-08-05",1655.0,1675.0,1602.0,1630.0,118100],["2026-08-06",1670.0,1762.0,1639.0,1755.0,119000],["2026-08-07",1739.0,1753.0,1611.0,1673.0,137200],["2026-08-10",1661.0,1717.0,1591.0,1717.0,83600],["2026-08-12",1677.0,1763.0,1673.0,1760.0,63900],["2026-08-13",1760.0,1815.0,1749.0,1780.0,110800],["2026-08-14",1770.0,1770.0,1685.0,1757.0,77400],["2026-08-17",1755.0,1834.0,1680.0,1834.0,129100],["2026-09-01",1846.0,1862.0,1760.0,1852.0,159500],["2026-09-02",1801.0,1844.0,1700.0,1704.0,260600],["2026-09-03",1737.0,1737.0,1665.0,1666.0,76700],["2026-09-04",1671.0,1758.0,1659.0,1724.0,84700],["2026-09-07",1746.0,1834.0,1724.0,1808.0,106300],["2026-09-08",1781.0,1862.0,1762.0,1771.0,136100],["2026-09-09",1762.0,1842.0,1760.0,1812.0,71900],["2026-09-10",1785.0,1849.0,1761.0,1849.0,66900],["2026-09-11",1769.0,1794.0,1743.0,1754.0,97200],["2026-09-14",1725.0,1760.0,1686.0,1754.0,67800],["2026-09-15",1769.0,1809.0,1730.0,1785.0,50600],["2026-09-16",1774.0,1798.0,1739.0,1776.0,61000],["2026-09-17",1807.0,1857.0,1795.0,1818.0,71700],["2026-09-18",1822.0,1917.0,1822.0,1906.0,160800],["2026-09-24",1930.0,1997.0,1788.0,1816.0,203500],["2026-09-25",1816.0,1900.0,1800.0,1824.0,116000],["2026-09-28",1855.0,1908.0,1843.0,1898.0,94400],["2026-09-29",1858.0,1915.0,1845.0,1900.0,74000],["2026-09-30",1883.0,1994.0,1877.0,1980.0,96700],["2026-10-01",1980.0,2010.0,1947.0,1963.0,85500],["2026-10-02",1965.0,2027.0,1930.0,1968.0,110900],["2026-10-05",1971.0,1992.0,1927.0,1973.0,45100],["2026-10-06",1950.0,1959.0,1898.0,1905.0,58300],["2026-10-07",1920.0,1947.0,1859.0,1898.0,56800],["2026-10-08",1898.0,1898.0,1791.0,1794.0,70400],["2026-10-09",1794.0,1867.0,1757.0,1861.0,60000],["2026-10-13",1856.0,1859.0,1814.0,1838.0,67300],["2026-10-14",1814.0,1869.0,1760.0,1804.0,96200],["2026-10-15",1620.0,1701.0,1511.0,1664.0,349300],["2026-10-16",1701.0,1745.0,1653.0,1698.0,200700],["2026-10-19",1698.0,1704.0,1635.0,1703.0,96200],["2026-10-20",1703.0,1703.0,1605.0,1605.0,78700],["2026-10-21",1616.0,1701.0,1616.0,1696.0,69500],["2026-10-22",1717.0,1717.0,1572.0,1578.0,98100],["2026-10-23",1527.0,1559.0,1471.0,1505.0,133600],["2026-10-26",1518.0,1533.0,1485.0,1512.0,46800],["2026-10-27",1523.0,1547.0,1493.0,1509.0,58400],["2026-10-28",1553.0,1646.0,1541.0,1635.0,102300],["2026-10-29",1602.0,1602.0,1526.0,1550.0,136500],["2026-10-30",1544.0,1584.0,1523.0,1566.0,91600],["2026-11-02",1535.0,1592.0,1527.0,1578.0,37600],["2026-11-04",1600.0,1638.0,1535.0,1602.0,96600],["2026-11-05",1602.0,1618.0,1546.0,1555.0,64600],["2026-11-06",1450.0,1529.0,1394.0,1465.0,120600],["2026-11-09",1471.0,1552.0,1471.0,1507.0,80000],["2026-11-10",1547.0,1603.0,1547.0,1591.0,75500],["2026-11-11",1580.0,1664.0,1577.0,1664.0,69400],["2026-11-12",1700.0,1747.0,1689.0,1725.0,129200],["2026-11-13",1685.0,1690.0,1599.0,1618.0,100300]];
+const DATANOTE = "";
+</script>
+<script src="intra/523A.js?v=20261113729"></script>
+<script src="assets/chart.js?v=febfe1bd"></script><!--kb-theme-js--><script>(function(){var bs=document.querySelectorAll('button.kb-theme[data-kb]');
+for(var i=0;i<bs.length;i++)bs[i].addEventListener('click',function(){var b=this,d=document.documentElement,
+cur=d.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),n=cur==='dark'?'light':'dark';
+d.setAttribute('data-theme',n);try{localStorage.setItem('fdb-theme',n)}catch(e){}
+var f=document.querySelectorAll('iframe');for(var j=0;j<f.length;j++){try{f[j].contentWindow.postMessage({chartTheme:n},'*')}catch(e){}}
+var k=b.getAttribute('data-kb');
+if(k==='reload')location.reload();
+else if(k==='msg')window.postMessage({chartTheme:n},'*');
+else if(k==='fn'&&typeof window.__kbRedraw==='function')window.__kbRedraw();});})();</script><!--/kb-theme-js--><!--mobile-fix-spacer--><div class="mf-spacer" aria-hidden="true"></div><!--/mobile-fix-spacer--></body></html>
